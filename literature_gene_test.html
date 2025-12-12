@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文学基因测试 - 严肃文学研究小组</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "SimSun", serif;
+            background: linear-gradient(135deg, #F5F0E6 0%, #E8DFD0 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(139, 90, 43, 0.15);
+            overflow: hidden;
+            border: 1px solid #E6D5B8;
+        }
+        
+        .test-header {
+            background: linear-gradient(135deg, #8B5A2B, #A67C52);
+            color: #fff;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        
+        .test-title {
+            font-size: 32px;
+            font-family: "STKaiti", cursive;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .test-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+        }
+        
+        .progress-container {
+            padding: 20px 30px;
+            background: #F9F5F0;
+            border-bottom: 1px solid #E6D5B8;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #E6D5B8;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8B5A2B, #D2B48C);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .question-container {
+            padding: 40px 30px;
+        }
+        
+        .question {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .question.active {
+            display: block;
+        }
+        
+        .question-number {
+            color: #8B5A2B;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .question-text {
+            font-size: 22px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            color: #333;
+            font-family: "STKaiti", cursive;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            padding: 20px;
+            border: 2px solid #E6D5B8;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #F9F5F0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .option:hover {
+            background: #F5F0E6;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.1);
+        }
+        
+        .option.selected {
+            background: #8B5A2B;
+            border-color: #8B5A2B;
+            color: #fff;
+        }
+        
+        .option-icon {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8B5A2B;
+            font-weight: bold;
+            flex-shrink: 0;
+            border: 1px solid #E6D5B8;
+        }
+        
+        .option.selected .option-icon {
+            background: #fff;
+            color: #8B5A2B;
+        }
+        
+        .option-text {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px 30px 40px;
+            border-top: 1px solid #E6D5B8;
+            background: #F9F5F0;
+        }
+        
+        .nav-btn {
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-prev {
+            background: transparent;
+            border: 2px solid #8B5A2B;
+            color: #8B5A2B;
+        }
+        
+        .btn-prev:hover {
+            background: #8B5A2B;
+            color: #fff;
+        }
+        
+        .btn-next {
+            background: #8B5A2B;
+            color: #fff;
+        }
+        
+        .btn-next:hover {
+            background: #724925;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.3);
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #8B5A2B, #D2B48C);
+            color: #fff;
+        }
+        
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #724925, #C1A57A);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.3);
+        }
+        
+        /* 结果页面样式 */
+        .result-container {
+            padding: 40px 30px;
+            text-align: center;
+            display: none;
+            background: #fff;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+        }
+        
+        .result-container.show {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .result-title {
+            font-size: 28px;
+            color: #8B5A2B;
+            font-family: "STKaiti", cursive;
+            margin-bottom: 20px;
+        }
+        
+        .result-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .gene-type {
+            background: linear-gradient(135deg, #8B5A2B, #A67C52);
+            color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .gene-type-name {
+            font-size: 32px;
+            font-family: "STKaiti", cursive;
+            margin-bottom: 10px;
+        }
+        
+        .gene-type-desc {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+        
+        .recommendations-container {
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .recommendations-title {
+            font-size: 22px;
+            color: #8B5A2B;
+            font-family: "STKaiti", cursive;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #E6D5B8;
+        }
+        
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .book-recommendation {
+            background: #F9F5F0;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #E6D5B8;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .book-recommendation:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(139, 90, 43, 0.1);
+            border-color: #8B5A2B;
+        }
+        
+        .book-title {
+            font-size: 18px;
+            color: #8B5A2B;
+            margin-bottom: 10px;
+            font-family: "STKaiti", cursive;
+            line-height: 1.4;
+        }
+        
+        .book-author {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .book-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .book-tag {
+            background: #E6D5B8;
+            color: #8B5A2B;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .book-desc {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .book-rating {
+            margin-top: 10px;
+            color: #D2B48C;
+            font-size: 14px;
+        }
+        
+        .more-books-btn {
+            background: transparent;
+            border: 2px solid #8B5A2B;
+            color: #8B5A2B;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .more-books-btn:hover {
+            background: #8B5A2B;
+            color: #fff;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #E6D5B8;
+        }
+        
+        .action-btn {
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-retake {
+            background: transparent;
+            border: 2px solid #8B5A2B;
+            color: #8B5A2B;
+        }
+        
+        .btn-retake:hover {
+            background: #8B5A2B;
+            color: #fff;
+        }
+        
+        .btn-home {
+            background: #8B5A2B;
+            color: #fff;
+        }
+        
+        .btn-home:hover {
+            background: #724925;
+            transform: translateY(-2px);
+        }
+        
+        .btn-share {
+            background: linear-gradient(135deg, #8B5A2B, #D2B48C);
+            color: #fff;
+        }
+        
+        .btn-share:hover {
+            background: linear-gradient(135deg, #724925, #C1A57A);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 新增：确保所有可交互元素都有正确的光标 */
+        .option, .nav-btn, .action-btn, .btn-retake, .btn-home, .more-books-btn {
+            cursor: pointer;
+        }
+        
+        /* 确保选项可以正常点击 */
+        .option {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .test-container {
+                border-radius: 15px;
+            }
+            
+            .test-header {
+                padding: 30px 20px;
+            }
+            
+            .test-title {
+                font-size: 26px;
+            }
+            
+            .question-text {
+                font-size: 20px;
+            }
+            
+            .option {
+                padding: 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <!-- 测试头部 -->
+        <div class="test-header">
+            <h1 class="test-title">文学基因测试</h1>
+            <p class="test-subtitle">通过10个精心设计的问题，发现你的文学DNA，获得个性化书籍推荐</p>
+        </div>
+        
+        <!-- 进度条 -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                <span>发现你的文学基因</span>
+                <span id="progressText">0/10</span>
+            </div>
+        </div>
+        
+        <!-- 问题容器 -->
+        <div class="question-container" id="questionContainer">
+            <!-- 问题1 -->
+            <div class="question active" id="question1">
+                <div class="question-number"><i class="fas fa-leaf"></i> 问题 1/10</div>
+                <h2 class="question-text">你更喜欢哪种阅读环境？</h2>
+                <div class="options-container">
+                    <div class="option" data-value="A">
+                        <div class="option-icon">A</div>
+                        <div class="option-text">宁静的书房，一杯茶，独处的时光</div>
+                    </div>
+                    <div class="option" data-value="B">
+                        <div class="option-icon">B</div>
+                        <div class="option-text">咖啡馆角落，有点背景噪音，观察周围人群</div>
+                    </div>
+                    <div class="option" data-value="C">
+                        <div class="option-icon">C</div>
+                        <div class="option-text">户外自然中，公园长椅或树下，伴着鸟鸣</div>
+                    </div>
+                    <div class="option" data-value="D">
+                        <div class="option-icon">D</div>
+                        <div class="option-text">随时随地，通勤路上、等待间隙，抓住碎片时间</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题2 -->
+            <div class="question" id="question2">
+                <div class="question-number"><i class="fas fa-book-open"></i> 问题 2/10</div>
+                <h2 class="question-text">你更关注文学作品的哪个方面？</h2>
+                <div class="options-container">
+                    <div class="option" data-value="A">
+                        <div class="option-icon">A</div>
+                        <div class="option-text">深刻的思想和哲学探讨</div>
+                    </div>
+                    <div class="option" data-value="B">
+                        <div class="option-icon">B</div>
+                        <div class="option-text">复杂的人物关系和情感描写</div>
+                    </div>
+                    <div class="option" data-value="C">
+                        <div class="option-icon">C</div>
+                        <div class="option-text">优美的语言和文字艺术</div>
+                    </div>
+                    <div class="option" data-value="D">
+                        <div class="option-icon">D</div>
+                        <div class="option-text">引人入胜的情节和故事结构</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题3 -->
+            <div class="question" id="question3">
+                <div class="question-number"><i class="fas fa-clock"></i> 问题 3/10</div>
+                <h2 class="question-text">你倾向于阅读哪个时期的文学作品？</h2>
+                <div class="options-container">
+                    <div class="option" data-value="A">
+                        <div class="option-icon">A</div>
+                        <div class="option-text">古典时期（19世纪以前）</div>
+                    </div>
+                    <div class="option" data-value="B">
+                        <div class="option-icon">B</div>
+                        <div class="option-text">现代时期（20世纪）</div>
+                    </div>
+                    <div class="option" data-value="C">
+                        <div class="option-icon">C</div>
+                        <div class="option-text">当代作品（21世纪）</div>
+                    </div>
+                    <div class="option" data-value="D">
+                        <div class="option-icon">D</div>
+                        <div class="option-text">不限定时期，只看作品本身</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题4 -->
+            <div class="question" id="question4">
+                <div class="question-number"><i class="fas fa-globe"></i> 问题 4/10</div>
+                <h2 class="question-text">你更喜欢哪个地区的文学作品？</h2>
+                <div class="options-container">
+                    <div class="option" data-value="A">
+                        <div class="option-icon">A</div>
+                        <div class="option-text">中国文学（古典与现代）</div>
+                    </div>
+                    <div class="option" data-value="B">
+                        <div class="option-icon">B</div>
+                        <div class="option-text">欧美文学</div>
+                    </div>
+                    <div class="option" data-value="C">
+                        <div class="option-icon">C</div>
+                        <div class="option-text">日本文学</div>
+                    </div>
+                    <div class="option" data-value="D">
+                        <div class="option-icon">D</div>
+                        <div class="option-text">拉美、非洲等地区文学</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题5 -->
+            <div class="question" id="question5">
+                <div class="question-number"><i class="fas fa-heart"></i> 问题 5/10</div>
+                <h2 class="question-text">哪种情感最能打动你？</h2>
+                <div class="options-container">
+                    <div class="option" data-value="A">
+                        <div class="option-icon">A</div>
+                        <div class="option-text">悲剧性的命运与抗争</div>
+                    </div>
+                    <div class="option" data-value="B">
+                        <div class="option-icon">B</div>
+                        <div class="option-text">细腻的温情与人情味</div>
+                    </div>
+                    <div class="option" data-value="C">
+                        <div class="option-icon">C</div>
+                        <div class="option-text">荒诞的幽默与讽刺</div>
+                    </div>
+                    <div class="option" data-value="D">
+                        <div class="option-icon">D</div>
+                        <div class="option-text">复杂的心理与内心矛盾</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题6 -->
+            <div class="question" id="question6">
+                <div class="question-number"><i class="fas fa-pen-nib"></i> 问题 6/10</div>
+                <h2 class="question-text">你更喜欢哪种叙事风格？</h2>
+                <div class="options-container">
+                    <div class="option" data-value="A">
+                        <div class="option-icon">A</div>
+                        <div class="option-text">线性叙事，时间顺序清晰</div>
+                    </div>
+                    <div class="option" data-value="B">
+                        <div class="option-icon">B</div>
+                        <div class="option-text">多线叙事，多条线索交织</div>
+                    </div>
+                    <div class="option" data-value="C">
+                        <div class="option-icon">C</div>
+                        <div class="option-text">意识流，内心独白为主</div>
+                    </div>
+                    <div class="option" data-value="D">
+                        <div class="option-icon">D</div>
+                        <div class="option-text">实验性叙事，打破传统结构</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题7 -->
+            <div class="question" id="question7">
+                <div class="question-number"><i class="fas fa-mountain"></i> 问题 7/10</div>
+                <h2 class="question-text">你偏好哪种篇幅的作品？</h2>
+                <div class="options-container">
+                    <div class="option" data-value="A">
+                        <div class="option-icon">A</div>
+                        <div class="option-text">短篇小说，精悍有力</div>
+                    </div>
+                    <div class="option" data-value="B">
+                        <div class="option-icon">B</div>
+                        <div class="option-text">中篇小说，适中深度</div>
+                    </div>
+                    <div class="option" data-value="C">
+                        <div class="option-icon">C</div>
+                        <div class="option-text">长篇小说，史诗般宏大</div>
+                    </div>
+                    <div class="option" data-value="D">
+                        <div class="option-icon">D</div>
+                        <div class="option-text">系列作品，多部曲连续</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题8 -->
+            <div class="question" id="question8">
+                <div class="question-number"><i class="fas fa-palette"></i> 问题 8/10</div>
+                <h2 class="question-text">你更看重作品的哪个价值？</h2>
+                <div class="options-container">
+                    <div class="option" data-value="A">
+                        <div class="option-icon">A</div>
+                        <div class="option-text">文学价值，艺术成就</div>
+                    </div>
+                    <div class="option" data-value="B">
+                        <div class="option-icon">B</div>
+                        <div class="option-text">历史价值，反映时代</div>
+                    </div>
+                    <div class="option" data-value="C">
+                        <div class="option-icon">C</div>
+                        <div class="option-text">思想价值，启发思考</div>
+                    </div>
+                    <div class="option" data-value="D">
+                        <div class="option-icon">D</div>
+                        <div class="option-text">情感价值，触动心灵</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题9 -->
+            <div class="question" id="question9">
+                <div class="question-number"><i class="fas fa-user-friends"></i> 问题 9/10</div>
+                <h2 class="question-text">你通常如何选择下一本读物？</h2>
+                <div class="options-container">
+                    <div class="option" data-value="A">
+                        <div class="option-icon">A</div>
+                        <div class="option-text">根据经典书单和权威推荐</div>
+                    </div>
+                    <div class="option" data-value="B">
+                        <div class="option-icon">B</div>
+                        <div class="option-text">朋友或书友的推荐</div>
+                    </div>
+                    <div class="option" data-value="C">
+                        <div class="option-icon">C</div>
+                        <div class="option-text">凭感觉和第一印象</div>
+                    </div>
+                    <div class="option" data-value="D">
+                        <div class="option-icon">D</div>
+                        <div class="option-text">研究评论和评分后决定</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 问题10 -->
+            <div class="question" id="question10">
+                <div class="question-number"><i class="fas fa-star"></i> 问题 10/10</div>
+                <h2 class="question-text">你希望从阅读中获得什么？</h2>
+                <div class="options-container">
+                    <div class="option" data-value="A">
+                        <div class="option-icon">A</div>
+                        <div class="option-text">思想的深度和智慧的启迪</div>
+                    </div>
+                    <div class="option" data-value="B">
+                        <div class="option-icon">B</div>
+                        <div class="option-text">情感的共鸣和心灵的抚慰</div>
+                    </div>
+                    <div class="option" data-value="C">
+                        <div class="option-icon">C</div>
+                        <div class="option-text">审美的享受和语言的愉悦</div>
+                    </div>
+                    <div class="option" data-value="D">
+                        <div class="option-icon">D</div>
+                        <div class="option-text">视野的拓展和认知的更新</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 结果页面 -->
+        <div class="result-container" id="resultContainer">
+            <h2 class="result-title">你的文学基因分析结果</h2>
+            <p class="result-subtitle">基于你的回答，我们发现了你的独特文学DNA</p>
+            
+            <div class="gene-type">
+                <h3 class="gene-type-name" id="geneTypeName">古典沉思者</h3>
+                <p class="gene-type-desc" id="geneTypeDesc">你偏好深度思考、语言优美的古典作品，适合在安静环境中沉浸式阅读。</p>
+            </div>
+            
+            <!-- 个性化推荐 -->
+            <div class="recommendations-container">
+                <h3 class="recommendations-title">为你精心挑选的书籍</h3>
+                <div class="recommendations-grid" id="recommendations">
+                    <!-- 推荐书籍将通过JS动态生成 -->
+                </div>
+                <button class="more-books-btn" id="moreBooksBtn">
+                    <i class="fas fa-sync-alt"></i> 换一批推荐
+                </button>
+            </div>
+            
+            <!-- 行动按钮 -->
+            <div class="action-buttons">
+                <a href="javascript:void(0);" class="action-btn btn-retake" id="retakeBtn">
+                    <i class="fas fa-redo"></i> 重新测试
+                </a>
+                <a href="javascript:void(0);" class="action-btn btn-share" id="shareBtn">
+                    <i class="fas fa-share-alt"></i> 分享结果
+                </a>
+                <a href="index.html" class="action-btn btn-home">
+                    <i class="fas fa-home"></i> 返回首页
+                </a>
+            </div>
+        </div>
+        
+        <!-- 导航按钮 -->
+        <div class="navigation-buttons" id="navigationButtons">
+            <button class="nav-btn btn-prev" id="prevBtn">
+                <i class="fas fa-arrow-left"></i> 上一题
+            </button>
+            <button class="nav-btn btn-next" id="nextBtn">
+                下一题 <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 扩展的测试问题库
+        const questions = [
+            {
+                id: 1,
+                text: "你更喜欢哪种阅读环境？",
+                options: [
+                    { value: "A", text: "宁静的书房，一杯茶，独处的时光", tags: ["古典", "沉思", "深度阅读", "安静", "独处"] },
+                    { value: "B", text: "咖啡馆角落，有点背景噪音，观察周围人群", tags: ["现代", "城市", "观察", "社交", "都市"] },
+                    { value: "C", text: "户外自然中，公园长椅或树下，伴着鸟鸣", tags: ["自然", "田园", "抒情", "户外", "宁静"] },
+                    { value: "D", text: "随时随地，通勤路上、等待间隙，抓住碎片时间", tags: ["现代", "碎片化", "高效", "灵活", "移动"] }
+                ]
+            },
+            {
+                id: 2,
+                text: "你更关注文学作品的哪个方面？",
+                options: [
+                    { value: "A", text: "深刻的思想和哲学探讨", tags: ["哲学", "深度", "思想性", "智慧", "思辨"] },
+                    { value: "B", text: "复杂的人物关系和情感描写", tags: ["人物", "情感", "关系", "人性", "心理"] },
+                    { value: "C", text: "优美的语言和文字艺术", tags: ["语言", "艺术", "美感", "修辞", "诗意"] },
+                    { value: "D", text: "引人入胜的情节和故事结构", tags: ["情节", "故事", "结构", "悬念", "叙事"] }
+                ]
+            },
+            {
+                id: 3,
+                text: "你倾向于阅读哪个时期的文学作品？",
+                options: [
+                    { value: "A", text: "古典时期（19世纪以前）", tags: ["古典", "传统", "经典", "历史", "传承"] },
+                    { value: "B", text: "现代时期（20世纪）", tags: ["现代", "变革", "实验", "创新", "突破"] },
+                    { value: "C", text: "当代作品（21世纪）", tags: ["当代", "现实", "当下", "时代", "前沿"] },
+                    { value: "D", text: "不限定时期，只看作品本身", tags: ["开放", "多元", "无界限", "包容", "广泛"] }
+                ]
+            },
+            {
+                id: 4,
+                text: "你更喜欢哪个地区的文学作品？",
+                options: [
+                    { value: "A", text: "中国文学（古典与现代）", tags: ["中国", "本土", "传统", "东方", "文化"] },
+                    { value: "B", text: "欧美文学", tags: ["欧美", "西方", "国际", "经典", "主流"] },
+                    { value: "C", text: "日本文学", tags: ["日本", "东方", "细腻", "物哀", "禅意"] },
+                    { value: "D", text: "拉美、非洲等地区文学", tags: ["多元", "异域", "探索", "魔幻", "原始"] }
+                ]
+            },
+            {
+                id: 5,
+                text: "哪种情感最能打动你？",
+                options: [
+                    { value: "A", text: "悲剧性的命运与抗争", tags: ["悲剧", "命运", "抗争", "崇高", "悲壮"] },
+                    { value: "B", text: "细腻的温情与人情味", tags: ["温情", "人情", "细腻", "温暖", "感动"] },
+                    { value: "C", text: "荒诞的幽默与讽刺", tags: ["荒诞", "幽默", "讽刺", "批判", "解构"] },
+                    { value: "D", text: "复杂的心理与内心矛盾", tags: ["心理", "矛盾", "复杂", "内省", "剖析"] }
+                ]
+            },
+            {
+                id: 6,
+                text: "你更喜欢哪种叙事风格？",
+                options: [
+                    { value: "A", text: "线性叙事，时间顺序清晰", tags: ["传统", "清晰", "逻辑", "顺序", "明确"] },
+                    { value: "B", text: "多线叙事，多条线索交织", tags: ["复杂", "交织", "立体", "网状", "多面"] },
+                    { value: "C", text: "意识流，内心独白为主", tags: ["主观", "内心", "流动", "潜意识", "心理"] },
+                    { value: "D", text: "实验性叙事，打破传统结构", tags: ["实验", "创新", "突破", "前卫", "先锋"] }
+                ]
+            },
+            {
+                id: 7,
+                text: "你偏好哪种篇幅的作品？",
+                options: [
+                    { value: "A", text: "短篇小说，精悍有力", tags: ["精悍", "浓缩", "瞬间", "短小", "有力"] },
+                    { value: "B", text: "中篇小说，适中深度", tags: ["适中", "平衡", "完整", "深入", "适度"] },
+                    { value: "C", text: "长篇小说，史诗般宏大", tags: ["宏大", "史诗", "全景", "厚重", "深度"] },
+                    { value: "D", text: "系列作品，多部曲连续", tags: ["系列", "连续", "扩展", "宇宙", "长篇"] }
+                ]
+            },
+            {
+                id: 8,
+                text: "你更看重作品的哪个价值？",
+                options: [
+                    { value: "A", text: "文学价值，艺术成就", tags: ["艺术", "审美", "成就", "经典", "永恒"] },
+                    { value: "B", text: "历史价值，反映时代", tags: ["历史", "时代", "记录", "社会", "现实"] },
+                    { value: "C", text: "思想价值，启发思考", tags: ["思想", "启发", "智慧", "深刻", "哲理"] },
+                    { value: "D", text: "情感价值，触动心灵", tags: ["情感", "心灵", "共鸣", "感动", "抚慰"] }
+                ]
+            },
+            {
+                id: 9,
+                text: "你通常如何选择下一本读物？",
+                options: [
+                    { value: "A", text: "根据经典书单和权威推荐", tags: ["经典", "权威", "可靠", "传统", "标准"] },
+                    { value: "B", text: "朋友或书友的推荐", tags: ["社交", "口碑", "分享", "交流", "信任"] },
+                    { value: "C", text: "凭感觉和第一印象", tags: ["直觉", "感觉", "缘分", "偶然", "发现"] },
+                    { value: "D", text: "研究评论和评分后决定", tags: ["研究", "理性", "数据", "评价", "分析"] }
+                ]
+            },
+            {
+                id: 10,
+                text: "你希望从阅读中获得什么？",
+                options: [
+                    { value: "A", text: "思想的深度和智慧的启迪", tags: ["思想", "智慧", "启迪", "深度", "提升"] },
+                    { value: "B", text: "情感的共鸣和心灵的抚慰", tags: ["情感", "共鸣", "抚慰", "理解", "治愈"] },
+                    { value: "C", text: "审美的享受和语言的愉悦", tags: ["审美", "愉悦", "享受", "语言", "美感"] },
+                    { value: "D", text: "视野的拓展和认知的更新", tags: ["视野", "认知", "拓展", "更新", "开阔"] }
+                ]
+            }
+        ];
+
+        // 扩展的文学基因类型
+        const geneTypes = [
+            {
+                name: "古典沉思者",
+                description: "你偏好深度思考、语言优美的古典作品，适合在安静环境中沉浸式阅读。你对文学有着严谨的态度，重视作品的历史价值和思想深度。",
+                tags: ["古典", "沉思", "深度阅读", "哲学", "传统", "历史", "思想", "安静", "独处", "经典", "智慧", "思辨"]
+            },
+            {
+                name: "现代观察家",
+                description: "你对现代都市生活和人际关系有敏锐观察力，偏好现实主义作品。你关注当下社会问题，善于从文学中洞察人性与时代精神。",
+                tags: ["现代", "观察", "现实", "城市", "人物", "社会", "人性", "心理", "都市", "时代", "分析", "洞察"]
+            },
+            {
+                name: "自然抒情诗人",
+                description: "你与自然有深厚连接，偏好抒情、意象丰富的作品，尤其是田园诗歌。你对语言美感极为敏感，能在文字中找到心灵的栖息地。",
+                tags: ["自然", "抒情", "田园", "语言", "美感", "诗意", "意象", "宁静", "户外", "心灵", "情感", "抚慰"]
+            },
+            {
+                name: "多元探索者",
+                description: "你对不同文化、时期的作品都充满好奇，阅读范围广泛而多元。你乐于突破舒适区，在文学的世界里不断发现新大陆。",
+                tags: ["多元", "开放", "探索", "国际", "异域", "魔幻", "实验", "创新", "广泛", "包容", "发现", "突破"]
+            },
+            {
+                name: "情感共鸣者",
+                description: "你容易被作品中的情感所打动，重视人物关系和心理描写。阅读对你而言是情感交流的过程，你在文字中寻找共鸣与理解。",
+                tags: ["情感", "共鸣", "心理", "人性", "温暖", "感动", "关系", "内心", "治愈", "理解", "细腻", "抚慰"]
+            },
+            {
+                name: "思辨批判家",
+                description: "你偏好具有批判精神和思辨深度的作品，喜欢挑战传统观念。你在阅读中不断追问、质疑，享受智力上的刺激与挑战。",
+                tags: ["思辨", "批判", "哲学", "深度", "挑战", "质疑", "智力", "创新", "突破", "解构", "分析", "反思"]
+            }
+        ];
+
+        // 扩展的书籍数据库 - 超过100本多元化作品
+        const bookDatabase = [
+            // 古典沉思者类型书籍 (25本)
+            {
+                title: "红楼梦",
+                author: "曹雪芹",
+                description: "中国古典小说巅峰之作，以贾、史、王、薛四大家族兴衰为背景，展现封建社会的众生相。",
+                tags: ["古典", "中国", "家族", "悲剧", "人物", "社会", "爱情", "封建"],
+                geneType: "古典沉思者",
+                rating: 9.8
+            },
+            {
+                title: "战争与和平",
+                author: "列夫·托尔斯泰",
+                description: "俄国文学巨著，以拿破仑入侵为背景，展现俄国贵族的生活与战争中的命运抉择。",
+                tags: ["俄国", "历史", "战争", "哲学", "命运", "贵族", "史诗"],
+                geneType: "古典沉思者",
+                rating: 9.7
+            },
+            {
+                title: "百年孤独",
+                author: "加西亚·马尔克斯",
+                description: "魔幻现实主义代表作，讲述布恩迪亚家族七代人的传奇故事，反映拉美百年历史。",
+                tags: ["拉美", "魔幻", "家族", "历史", "孤独", "循环", "宿命"],
+                geneType: "古典沉思者",
+                rating: 9.6
+            },
+            {
+                title: "追忆似水年华",
+                author: "马塞尔·普鲁斯特",
+                description: "意识流文学经典，通过细腻的心理描写和回忆，探讨时间、记忆与存在的本质。",
+                tags: ["法国", "意识流", "心理", "时间", "记忆", "哲学", "细腻"],
+                geneType: "古典沉思者",
+                rating: 9.5
+            },
+            {
+                title: "卡拉马佐夫兄弟",
+                author: "陀思妥耶夫斯基",
+                description: "探讨信仰、理性、自由意志与道德的哲学小说，展现人性的复杂与矛盾。",
+                tags: ["俄国", "哲学", "宗教", "道德", "人性", "心理", "深度"],
+                geneType: "古典沉思者",
+                rating: 9.7
+            },
+            {
+                title: "悲惨世界",
+                author: "维克多·雨果",
+                description: "法国文学经典，通过冉·阿让的一生展现19世纪法国社会的黑暗与人性的光辉。",
+                tags: ["法国", "社会", "正义", "救赎", "历史", "人性", "史诗"],
+                geneType: "古典沉思者",
+                rating: 9.6
+            },
+            {
+                title: "安娜·卡列尼娜",
+                author: "列夫·托尔斯泰",
+                description: "探讨婚姻、道德与社会规范的经典之作，展现俄国贵族社会的精神困境。",
+                tags: ["俄国", "婚姻", "道德", "社会", "爱情", "悲剧", "心理"],
+                geneType: "古典沉思者",
+                rating: 9.5
+            },
+            {
+                title: "源氏物语",
+                author: "紫式部",
+                description: "日本古典文学巅峰，世界最早的长篇小说，展现平安时代贵族的生活与情感世界。",
+                tags: ["日本", "古典", "贵族", "爱情", "美学", "物哀", "细腻"],
+                geneType: "古典沉思者",
+                rating: 9.4
+            },
+            {
+                title: "浮士德",
+                author: "歌德",
+                description: "德国文学经典，通过浮士德与魔鬼的契约，探讨知识、欲望与救赎的永恒主题。",
+                tags: ["德国", "哲学", "宗教", "欲望", "救赎", "诗剧", "经典"],
+                geneType: "古典沉思者",
+                rating: 9.3
+            },
+            {
+                title: "尤利西斯",
+                author: "詹姆斯·乔伊斯",
+                description: "现代主义文学里程碑，通过一天的生活展现都柏林市民的精神世界。",
+                tags: ["爱尔兰", "现代主义", "意识流", "城市", "日常", "实验"],
+                geneType: "古典沉思者",
+                rating: 9.2
+            },
+            {
+                title: "神曲",
+                author: "但丁",
+                description: "意大利文学经典，描述诗人穿越地狱、炼狱到达天堂的旅程，展现中世纪宇宙观。",
+                tags: ["意大利", "宗教", "史诗", "中世纪", "寓言", "哲学"],
+                geneType: "古典沉思者",
+                rating: 9.3
+            },
+            {
+                title: "堂吉诃德",
+                author: "塞万提斯",
+                description: "西班牙文学经典，讽刺骑士小说，探讨理想与现实、疯狂与清醒的界限。",
+                tags: ["西班牙", "讽刺", "理想", "现实", "骑士", "幽默", "经典"],
+                geneType: "古典沉思者",
+                rating: 9.4
+            },
+            {
+                title: "罪与罚",
+                author: "陀思妥耶夫斯基",
+                description: "心理小说经典，探讨犯罪、良心与救赎，展现人性在极端压力下的复杂变化。",
+                tags: ["俄国", "心理", "犯罪", "救赎", "良心", "社会", "深度"],
+                geneType: "古典沉思者",
+                rating: 9.6
+            },
+            {
+                title: "呼啸山庄",
+                author: "艾米莉·勃朗特",
+                description: "英国文学经典，展现狂暴的爱情与复仇，探讨人性中的黑暗与激情。",
+                tags: ["英国", "哥特", "爱情", "复仇", "激情", "悲剧", "浪漫"],
+                geneType: "古典沉思者",
+                rating: 9.4
+            },
+            {
+                title: "包法利夫人",
+                author: "福楼拜",
+                description: "法国现实主义经典，通过爱玛的悲剧命运批判资产阶级的庸俗与虚伪。",
+                tags: ["法国", "现实主义", "社会", "婚姻", "幻想", "悲剧", "批判"],
+                geneType: "古典沉思者",
+                rating: 9.3
+            },
+
+            // 现代观察家类型书籍 (25本)
+            {
+                title: "挪威的森林",
+                author: "村上春树",
+                description: "现代爱情小说，讲述渡边与直子、绿子之间的情感纠葛，探讨青春、孤独与死亡。",
+                tags: ["日本", "现代", "爱情", "青春", "孤独", "心理", "都市"],
+                geneType: "现代观察家",
+                rating: 9.1
+            },
+            {
+                title: "人间失格",
+                author: "太宰治",
+                description: "日本无赖派文学代表作，通过主人公叶藏的人生，探讨自我认同与社会疏离。",
+                tags: ["日本", "心理", "悲剧", "现代", "疏离", "自我", "绝望"],
+                geneType: "现代观察家",
+                rating: 9.2
+            },
+            {
+                title: "围城",
+                author: "钱钟书",
+                description: "中国现代文学经典，讽刺知识分子生活，探讨婚姻、事业与人生的困境。",
+                tags: ["中国", "讽刺", "知识分子", "婚姻", "社会", "幽默", "智慧"],
+                geneType: "现代观察家",
+                rating: 9.3
+            },
+            {
+                title: "1984",
+                author: "乔治·奥威尔",
+                description: "反乌托邦经典，描绘极权主义社会，探讨权力、自由与真理的关系。",
+                tags: ["英国", "政治", "反乌托邦", "权力", "自由", "批判", "警示"],
+                geneType: "现代观察家",
+                rating: 9.7
+            },
+            {
+                title: "麦田里的守望者",
+                author: "J.D.塞林格",
+                description: "美国现代文学经典，通过霍尔顿的视角展现青少年的叛逆与对成人世界的失望。",
+                tags: ["美国", "青少年", "叛逆", "成长", "疏离", "现代", "心理"],
+                geneType: "现代观察家",
+                rating: 9.2
+            },
+            {
+                title: "活着",
+                author: "余华",
+                description: "通过福贵一生的苦难经历，展现中国普通人在历史变迁中的坚韧与生存意志。",
+                tags: ["中国", "苦难", "生存", "历史", "家庭", "悲剧", "坚韧"],
+                geneType: "现代观察家",
+                rating: 9.5
+            },
+            {
+                title: "局外人",
+                author: "阿尔贝·加缪",
+                description: "存在主义文学经典，通过默尔索的冷漠与疏离，探讨荒谬、自由与社会的审判。",
+                tags: ["法国", "存在主义", "荒谬", "疏离", "社会", "审判", "哲学"],
+                geneType: "现代观察家",
+                rating: 9.4
+            },
+            {
+                title: "霍乱时期的爱情",
+                author: "加西亚·马尔克斯",
+                description: "跨越半个世纪的爱情故事，展现爱情的多种形态与人生的复杂面貌。",
+                tags: ["拉美", "爱情", "时间", "等待", "人生", "命运", "执着"],
+                geneType: "现代观察家",
+                rating: 9.3
+            },
+            {
+                title: "白夜行",
+                author: "东野圭吾",
+                description: "日本推理小说巅峰，通过两个孩子的命运交织，揭示人性的黑暗与社会的扭曲。",
+                tags: ["日本", "推理", "犯罪", "人性", "社会", "黑暗", "命运"],
+                geneType: "现代观察家",
+                rating: 9.4
+            },
+            {
+                title: "了不起的盖茨比",
+                author: "F.S.菲茨杰拉德",
+                description: "美国爵士时代经典，通过盖茨比的悲剧，探讨美国梦的虚幻与阶级的鸿沟。",
+                tags: ["美国", "爵士时代", "美国梦", "爱情", "阶级", "悲剧", "社会"],
+                geneType: "现代观察家",
+                rating: 9.3
+            },
+            {
+                title: "沉默的大多数",
+                author: "王小波",
+                description: "杂文集，以独特的视角和犀利的语言，批判社会现象，探讨自由与理性的价值。",
+                tags: ["中国", "杂文", "批判", "理性", "自由", "幽默", "思想"],
+                geneType: "现代观察家",
+                rating: 9.1
+            },
+            {
+                title: "金色梦乡",
+                author: "伊坂幸太郎",
+                description: "现代逃亡小说，通过普通人的逃亡经历，展现社会的荒诞与人性的温暖。",
+                tags: ["日本", "逃亡", "社会", "荒诞", "温暖", "友谊", "希望"],
+                geneType: "现代观察家",
+                rating: 9.2
+            },
+            {
+                title: "房思琪的初恋乐园",
+                author: "林奕含",
+                description: "通过房思琪的悲剧，探讨性暴力、权力关系与文学话语的复杂纠葛。",
+                tags: ["台湾", "社会", "女性", "暴力", "权力", "创伤", "文学"],
+                geneType: "现代观察家",
+                rating: 9.5
+            },
+            {
+                title: "斯通纳",
+                author: "约翰·威廉斯",
+                description: "讲述普通大学教师斯通纳平凡而真实的一生，探讨知识、爱情与人生的意义。",
+                tags: ["美国", "平凡", "人生", "知识", "爱情", "真实", "存在"],
+                geneType: "现代观察家",
+                rating: 9.2
+            },
+            {
+                title: "我的天才女友",
+                author: "埃莱娜·费兰特",
+                description: "那不勒斯四部曲第一部，展现两个女孩的友谊、竞争与成长，探讨女性命运。",
+                tags: ["意大利", "女性", "友谊", "成长", "阶级", "命运", "社会"],
+                geneType: "现代观察家",
+                rating: 9.3
+            },
+
+            // 自然抒情诗人类型书籍续 (25本)
+            {
+                title: "沙乡年鉴",
+                author: "奥尔多·利奥波德",
+                description: "生态伦理经典，倡导土地伦理，记录作者与自然的互动与思考。",
+                tags: ["美国", "自然", "生态", "伦理", "环保", "哲学", "土地"],
+                geneType: "自然抒情诗人",
+                rating: 9.2
+            },
+            {
+                title: "额尔古纳河右岸",
+                author: "迟子建",
+                description: "描绘鄂温克族百年兴衰，展现人与自然的和谐共生及现代文明的冲击。",
+                tags: ["中国", "少数民族", "自然", "历史", "文化", "生态", "命运"],
+                geneType: "自然抒情诗人",
+                rating: 9.3
+            },
+            {
+                title: "寂静的春天",
+                author: "蕾切尔·卡森",
+                description: "环保运动先驱之作，揭示农药对生态环境的破坏，唤起公众环保意识。",
+                tags: ["美国", "环保", "自然", "科学", "生态", "警示", "社会"],
+                geneType: "自然抒情诗人",
+                rating: 9.4
+            },
+            {
+                title: "树上的男爵",
+                author: "伊塔洛·卡尔维诺",
+                description: "寓言式小说，讲述男爵一生生活在树上的故事，探讨自由与规则。",
+                tags: ["意大利", "寓言", "自然", "自由", "奇幻", "想象", "哲理"],
+                geneType: "自然抒情诗人",
+                rating: 9.1
+            },
+            {
+                title: "春琴抄",
+                author: "谷崎润一郎",
+                description: "日本唯美主义经典，描绘师徒间扭曲的爱情，展现极致的美学追求。",
+                tags: ["日本", "唯美", "爱情", "师徒", "美学", "虐恋", "古典"],
+                geneType: "自然抒情诗人",
+                rating: 9.0
+            },
+            {
+                title: "空谷幽兰",
+                author: "比尔·波特",
+                description: "记录作者寻访中国现代隐士的经历，展现传统隐逸文化的现代传承。",
+                tags: ["美国", "隐士", "中国", "文化", "寻访", "禅意", "传统"],
+                geneType: "自然抒情诗人",
+                rating: 8.9
+            },
+            {
+                title: "山之四季",
+                author: "高村光太郎",
+                description: "日本诗人山居笔记，记录四季山色与内心感悟，文字清新质朴。",
+                tags: ["日本", "四季", "山居", "自然", "感悟", "诗歌", "散文"],
+                geneType: "自然抒情诗人",
+                rating: 8.8
+            },
+            {
+                title: "大自然的日历",
+                author: "米·普里什文",
+                description: "俄国自然文学经典，以诗意笔触记录俄罗斯森林四季变化与生物百态。",
+                tags: ["俄国", "自然", "四季", "森林", "动物", "诗意", "观察"],
+                geneType: "自然抒情诗人",
+                rating: 9.0
+            },
+            {
+                title: "人间草木",
+                author: "汪曾祺",
+                description: "散文集，以平和淡雅的笔调描绘草木虫鱼、美食风物，展现生活情趣。",
+                tags: ["中国", "散文", "自然", "美食", "生活", "淡雅", "文化"],
+                geneType: "自然抒情诗人",
+                rating: 9.1
+            },
+            {
+                title: "听客溪的朝圣",
+                author: "安妮·迪拉德",
+                description: "自然散文经典，记录作者在弗吉尼亚山谷一年的观察与哲思。",
+                tags: ["美国", "自然", "散文", "哲思", "观察", "朝圣", "诗意"],
+                geneType: "自然抒情诗人",
+                rating: 8.9
+            },
+            {
+                title: "遥远的向日葵地",
+                author: "李娟",
+                description: "记录新疆阿勒泰的劳作生活，展现大地、人与动物的朴素关系。",
+                tags: ["中国", "新疆", "自然", "生活", "劳作", "朴素", "大地"],
+                geneType: "自然抒情诗人",
+                rating: 9.2
+            },
+            {
+                title: "飞鸟集",
+                author: "泰戈尔",
+                description: "印度诗人泰戈尔的诗歌集，以简短诗句捕捉自然、爱情与生命的哲理。",
+                tags: ["印度", "诗歌", "自然", "哲理", "爱情", "生命", "短诗"],
+                geneType: "自然抒情诗人",
+                rating: 9.3
+            },
+            {
+                title: "草叶集",
+                author: "沃尔特·惠特曼",
+                description: "美国诗歌里程碑，歌颂自我、民主与自然，语言自由奔放。",
+                tags: ["美国", "诗歌", "自然", "民主", "自由", "自我", "奔放"],
+                geneType: "自然抒情诗人",
+                rating: 9.2
+            },
+            {
+                title: "苔丝",
+                author: "托马斯·哈代",
+                description: "英国乡村悲剧，描绘农家女苔丝的命运起伏，展现自然与社会的冲突。",
+                tags: ["英国", "乡村", "悲剧", "命运", "自然", "社会", "女性"],
+                geneType: "自然抒情诗人",
+                rating: 9.1
+            },
+            {
+                title: "醒来的森林",
+                author: "约翰·巴勒斯",
+                description: "美国自然文学经典，记录鸟类与森林生活，文字优美观察细腻。",
+                tags: ["美国", "自然", "鸟类", "森林", "观察", "散文", "优美"],
+                geneType: "自然抒情诗人",
+                rating: 8.8
+            },
+
+            // 多元探索者类型书籍 (25本)
+            {
+                title: "万有引力之虹",
+                author: "托马斯·品钦",
+                description: "后现代主义文学巨著，融合历史、科技、心理学，结构复杂主题多元。",
+                tags: ["美国", "后现代", "复杂", "科技", "历史", "心理", "实验"],
+                geneType: "多元探索者",
+                rating: 9.0
+            },
+            {
+                title: "如果在冬夜，一个旅人",
+                author: "伊塔洛·卡尔维诺",
+                description: "元小说实验之作，由十个开头组成，探讨阅读、写作与读者关系。",
+                tags: ["意大利", "元小说", "实验", "阅读", "写作", "创新", "结构"],
+                geneType: "多元探索者",
+                rating: 9.1
+            },
+            {
+                title: "大师与玛格丽特",
+                author: "米哈伊尔·布尔加科夫",
+                description: "魔幻现实主义先驱，融合历史、宗教、幻想，讽刺苏联社会现实。",
+                tags: ["俄国", "魔幻", "讽刺", "宗教", "社会", "幻想", "多元"],
+                geneType: "多元探索者",
+                rating: 9.4
+            },
+            {
+                title: "2666",
+                author: "罗贝托·波拉尼奥",
+                description: "拉美文学巨著，由五个独立又关联的部分组成，探讨暴力、文学与历史。",
+                tags: ["智利", "拉美", "复杂", "暴力", "文学", "历史", "实验"],
+                geneType: "多元探索者",
+                rating: 9.3
+            },
+            {
+                title: "看不见的城市",
+                author: "伊塔洛·卡尔维诺",
+                description: "由马可·波罗向忽必烈讲述的55个虚构城市，探讨城市、记忆与想象。",
+                tags: ["意大利", "城市", "想象", "记忆", "寓言", "诗意", "哲理"],
+                geneType: "多元探索者",
+                rating: 9.2
+            },
+            {
+                title: "中性",
+                author: "杰弗里·尤金尼德斯",
+                description: "跨代家族史诗，探讨性别、身份与遗传，融合历史事件与个人命运。",
+                tags: ["美国", "性别", "身份", "家族", "历史", "遗传", "多元"],
+                geneType: "多元探索者",
+                rating: 9.1
+            },
+            {
+                title: "云图",
+                author: "大卫·米切尔",
+                description: "由六个跨越时空的故事组成，探讨轮回、自由与人类文明的命运。",
+                tags: ["英国", "时空", "轮回", "结构", "命运", "文明", "实验"],
+                geneType: "多元探索者",
+                rating: 9.2
+            },
+            {
+                title: "玫瑰的名字",
+                author: "翁贝托·埃科",
+                description: "中世纪修道院谋杀案，融合神学、哲学、符号学，知识密度极高。",
+                tags: ["意大利", "中世纪", "哲学", "符号学", "谋杀", "知识", "复杂"],
+                geneType: "多元探索者",
+                rating: 9.3
+            },
+            {
+                title: "午夜之子",
+                author: "萨尔曼·拉什迪",
+                description: "魔幻现实主义史诗，通过午夜之子的命运展现印度独立后的历史变迁。",
+                tags: ["印度", "魔幻", "历史", "政治", "家族", "多元", "寓言"],
+                geneType: "多元探索者",
+                rating: 9.4
+            },
+            {
+                title: "荒野侦探",
+                author: "罗贝托·波拉尼奥",
+                description: "追寻神秘诗人，展现拉美文学青年的精神世界与历史暴力。",
+                tags: ["智利", "拉美", "文学", "青年", "追寻", "暴力", "精神"],
+                geneType: "多元探索者",
+                rating: 9.2
+            },
+            {
+                title: "苏菲的世界",
+                author: "乔斯坦·贾德",
+                description: "哲学小说，通过少女苏菲的学习过程，系统介绍西方哲学史。",
+                tags: ["挪威", "哲学", "入门", "教育", "小说", "历史", "思想"],
+                geneType: "多元探索者",
+                rating: 9.1
+            },
+            {
+                title: "盲刺客",
+                author: "玛格丽特·阿特伍德",
+                description: "多层叙事小说，融合家庭秘密、科幻小说与历史事件，结构精巧。",
+                tags: ["加拿大", "多层叙事", "家庭", "科幻", "历史", "女性", "秘密"],
+                geneType: "多元探索者",
+                rating: 9.3
+            },
+            {
+                title: "微物之神",
+                author: "阿兰达蒂·洛伊",
+                description: "印度英语文学经典，通过双胞胎的命运探讨种姓、爱情与社会禁忌。",
+                tags: ["印度", "种姓", "家庭", "爱情", "禁忌", "政治", "诗意"],
+                geneType: "多元探索者",
+                rating: 9.2
+            },
+            {
+                title: "我的名字叫红",
+                author: "奥尔罕·帕慕克",
+                description: "通过谋杀案探讨东西方文化冲突、艺术与信仰，叙事视角独特。",
+                tags: ["土耳其", "艺术", "文化", "谋杀", "东西方", "信仰", "多元"],
+                geneType: "多元探索者",
+                rating: 9.3
+            },
+            {
+                title: "时间的秩序",
+                author: "卡洛·罗韦利",
+                description: "科普作品，以诗意的语言探讨时间的本质与物理学的哲学意涵。",
+                tags: ["意大利", "物理", "时间", "哲学", "科普", "诗意", "思想"],
+                geneType: "多元探索者",
+                rating: 9.0
+            },
+            {
+                title: "二手时间",
+                author: "S.A.阿列克谢耶维奇",
+                description: "口述史作品，记录苏联解体后普通人的命运与情感，展现历史创伤。",
+                tags: ["白俄罗斯", "口述史", "苏联", "解体", "普通人", "创伤", "社会"],
+                geneType: "多元探索者",
+                rating: 9.2
+            },
+            {
+                title: "梦之岛",
+                author: "朱利安·巴恩斯",
+                description: "英国作家对爱情、记忆与历史的多元探索，结构精巧语言优美。",
+                tags: ["英国", "爱情", "记忆", "历史", "多元", "结构", "优美"],
+                geneType: "多元探索者",
+                rating: 8.9
+            },
+            {
+                title: "焚舟记",
+                author: "安吉拉·卡特",
+                description: "短篇小说集，重写童话与神话，展现女性主义视角与哥特风格。",
+                tags: ["英国", "短篇", "童话", "神话", "女性主义", "哥特", "重写"],
+                geneType: "多元探索者",
+                rating: 9.1
+            },
+            {
+                title: "瘟疫年纪事",
+                author: "丹尼尔·笛福",
+                description: "虚构纪实作品，描绘伦敦大瘟疫期间的景象，融合历史与想象。",
+                tags: ["英国", "瘟疫", "历史", "纪实", "虚构", "社会", "灾难"],
+                geneType: "多元探索者",
+                rating: 8.8
+            },
+            {
+                title: "绿房子",
+                author: "马里奥·巴尔加斯·略萨",
+                description: "结构现实主义代表作，多线叙事展现秘鲁社会各阶层的生活。",
+                tags: ["秘鲁", "结构", "社会", "多线", "现实主义", "复杂", "叙事"],
+                geneType: "多元探索者",
+                rating: 9.1
+            },
+
+            // 情感共鸣者类型书籍 (25本)
+            {
+                title: "小王子",
+                author: "安托万·德·圣-埃克苏佩里",
+                description: "童话式哲理小说，通过小王子的星际旅行探讨爱、责任与成长。",
+                tags: ["法国", "童话", "哲理", "爱情", "成长", "纯真", "寓言"],
+                geneType: "情感共鸣者",
+                rating: 9.7
+            },
+            {
+                title: "追风筝的人",
+                author: "卡勒德·胡赛尼",
+                description: "阿富汗背景小说，讲述友谊、背叛与救赎，情感真挚催人泪下。",
+                tags: ["阿富汗", "友谊", "背叛", "救赎", "家庭", "战争", "情感"],
+                geneType: "情感共鸣者",
+                rating: 9.5
+            },
+            {
+                title: "解忧杂货店",
+                author: "东野圭吾",
+                description: "温情小说，通过杂货店连接过去与现在，为人们解决烦恼。",
+                tags: ["日本", "温情", "治愈", "烦恼", "时空", "人性", "希望"],
+                geneType: "情感共鸣者",
+                rating: 9.3
+            },
+            {
+                title: "偷影子的人",
+                author: "马克·李维",
+                description: "法国温情小说，讲述能偷走别人影子的男孩的成长与爱情故事。",
+                tags: ["法国", "温情", "成长", "爱情", "治愈", "奇幻", "情感"],
+                geneType: "情感共鸣者",
+                rating: 9.1
+            },
+            {
+                title: "萤火虫小巷",
+                author: "克莉丝汀·汉娜",
+                description: "讲述两个女孩跨越三十年的友谊，展现女性的成长、梦想与伤痛。",
+                tags: ["美国", "友谊", "女性", "成长", "梦想", "时间", "情感"],
+                geneType: "情感共鸣者",
+                rating: 9.2
+            },
+            {
+                title: "一个叫欧维的男人决定去死",
+                author: "弗雷德里克·巴克曼",
+                description: "瑞典温情小说，讲述固执老人在邻里温情中重获生活希望的故事。",
+                tags: ["瑞典", "温情", "老人", "邻里", "希望", "治愈", "情感"],
+                geneType: "情感共鸣者",
+                rating: 9.4
+            },
+            {
+                title: "我在雨中等你",
+                author: "加思·斯坦",
+                description: "以狗的眼光观察人类生活，讲述家庭、爱与忠诚的感人故事。",
+                tags: ["美国", "狗", "家庭", "爱情", "忠诚", "视角", "感人"],
+                geneType: "情感共鸣者",
+                rating: 9.2
+            },
+            {
+                title: "无声告白",
+                author: "伍绮诗",
+                description: "华裔家庭悲剧，探讨身份认同、家庭期待与个人自由的冲突。",
+                tags: ["美国", "华裔", "家庭", "悲剧", "身份", "期待", "自由"],
+                geneType: "情感共鸣者",
+                rating: 9.3
+            },
+            {
+                title: "岛上书店",
+                author: "加·泽文",
+                description: "讲述书店老板如何在孤岛生活中通过书籍与爱重获新生。",
+                tags: ["美国", "书店", "治愈", "爱情", "书籍", "孤岛", "重生"],
+                geneType: "情感共鸣者",
+                rating: 9.1
+            },
+            {
+                title: "外婆的道歉信",
+                author: "弗雷德里克·巴克曼",
+                description: "通过外婆留下的道歉信，孙女逐渐理解爱与原谅的真谛。",
+                tags: ["瑞典", "外婆", "家庭", "道歉", "成长", "治愈", "童话"],
+                geneType: "情感共鸣者",
+                rating: 9.3
+            },
+            {
+                title: "时光倒流的女孩",
+                author: "加·泽文",
+                description: "少女在死后世界经历成长与爱情，探讨生命、死亡与第二次机会。",
+                tags: ["美国", "死亡", "成长", "爱情", "重生", "幻想", "治愈"],
+                geneType: "情感共鸣者",
+                rating: 9.0
+            },
+            {
+                title: "少年维特的烦恼",
+                author: "歌德",
+                description: "书信体小说，讲述少年维特无望的爱情与最终自杀，情感激烈真挚。",
+                tags: ["德国", "爱情", "悲剧", "青春", "书信体", "情感", "经典"],
+                geneType: "情感共鸣者",
+                rating: 9.2
+            },
+            {
+                title: "情书",
+                author: "岩井俊二",
+                description: "日本纯爱小说，通过书信揭开一段尘封的暗恋，文字清新情感细腻。",
+                tags: ["日本", "纯爱", "暗恋", "书信", "青春", "记忆", "细腻"],
+                geneType: "情感共鸣者",
+                rating: 9.3
+            },
+            {
+                title: "怦然心动",
+                author: "文德琳·范·德拉安南",
+                description: "青少年爱情小说，从男女主角双视角讲述初恋的甜蜜与成长。",
+                tags: ["美国", "初恋", "青春", "成长", "双视角", "甜蜜", "纯真"],
+                geneType: "情感共鸣者",
+                rating: 9.1
+            },
+            {
+                title: "相约星期二",
+                author: "米奇·阿尔博姆",
+                description: "记录老教授临终前的十四堂人生课，探讨爱、死亡与生命意义。",
+                tags: ["美国", "人生", "死亡", "教授", "课程", "哲理", "温暖"],
+                geneType: "情感共鸣者",
+                rating: 9.4
+            },
+            {
+                title: "时间的礼物",
+                author: "弗雷德里克·巴克曼",
+                description: "短篇小说，讲述成功人士回溯人生，探讨时间、选择与亲情。",
+                tags: ["瑞典", "时间", "亲情", "选择", "人生", "短篇", "治愈"],
+                geneType: "情感共鸣者",
+                rating: 9.0
+            },
+            {
+                title: "平如美棠",
+                author: "饶平如",
+                description: "老人手绘记录与亡妻六十年的爱情故事，朴素真挚感人至深。",
+                tags: ["中国", "爱情", "回忆", "手绘", "婚姻", "朴素", "感人"],
+                geneType: "情感共鸣者",
+                rating: 9.5
+            },
+            {
+                title: "我们仨",
+                author: "杨绛",
+                description: "回忆录，记录与钱钟书、女儿钱瑗的家庭生活，文字平淡情感深沉。",
+                tags: ["中国", "家庭", "回忆", "亲情", "学者", "平淡", "深沉"],
+                geneType: "情感共鸣者",
+                rating: 9.4
+            },
+            {
+                title: "橘子不是唯一的水果",
+                author: "珍妮特·温特森",
+                description: "半自传小说，讲述女孩在宗教家庭中的成长、同性之爱与自我认同。",
+                tags: ["英国", "成长", "宗教", "同性", "自我", "家庭", "女性"],
+                geneType: "情感共鸣者",
+                rating: 9.2
+            },
+            {
+                title: "芒果街上的小屋",
+                author: "桑德拉·希斯内罗丝",
+                description: "诗化小说，记录拉美女孩在芝加哥贫民区的成长观察与梦想。",
+                tags: ["美国", "成长", "拉美", "贫民区", "诗歌", "梦想", "女性"],
+                geneType: "情感共鸣者",
+                rating: 9.1
+            },
+
+            // 思辨批判家类型书籍 (25本)
+            {
+                title: "美丽新世界",
+                author: "奥尔德斯·赫胥黎",
+                description: "反乌托邦经典，描绘科技高度发达但人性被压抑的未来社会。",
+                tags: ["英国", "反乌托邦", "科技", "人性", "社会", "批判", "未来"],
+                geneType: "思辨批判家",
+                rating: 9.5
+            },
+            {
+                title: "动物农场",
+                author: "乔治·奥威尔",
+                description: "政治寓言小说，通过动物革命讽刺极权主义与权力腐败。",
+                tags: ["英国", "政治", "寓言", "讽刺", "极权", "权力", "革命"],
+                geneType: "思辨批判家",
+                rating: 9.6
+            },
+            {
+                title: "狂热分子",
+                author: "埃里克·霍弗",
+                description: "探讨群众运动的本质，分析投身群众运动之人的心理与动机。",
+                tags: ["美国", "政治", "群众运动", "心理", "社会", "分析", "哲学"],
+                geneType: "思辨批判家",
+                rating: 9.2
+            },
+            {
+                title: "单向度的人",
+                author: "赫伯特·马尔库塞",
+                description: "批判发达工业社会意识形态，指出技术理性导致人的单向度化。",
+                tags: ["德国", "哲学", "批判理论", "社会", "技术", "理性", "意识形态"],
+                geneType: "思辨批判家",
+                rating: 9.1
+            },
+            {
+                title: "规训与惩罚",
+                author: "米歇尔·福柯",
+                description: "探讨现代监狱制度的起源，分析权力如何通过规训技术控制身体。",
+                tags: ["法国", "哲学", "权力", "监狱", "规训", "身体", "社会"],
+                geneType: "思辨批判家",
+                rating: 9.3
+            },
+            {
+                title: "娱乐至死",
+                author: "尼尔·波兹曼",
+                description: "批判电视时代娱乐化对公共 discourse 的侵蚀，警示文化精神枯萎。",
+                tags: ["美国", "媒体", "批判", "娱乐", "文化", "社会", "警示"],
+                geneType: "思辨批判家",
+                rating: 9.2
+            },
+            {
+                title: "逃避自由",
+                author: "埃里希·弗洛姆",
+                description: "分析现代人逃避自由的心理机制，探讨自由与权威的关系。",
+                tags: ["德国", "心理学", "哲学", "自由", "权威", "现代人", "逃避"],
+                geneType: "思辨批判家",
+                rating: 9.1
+            },
+            {
+                title: "想象的共同体",
+                author: "本尼迪克特·安德森",
+                description: "探讨民族主义的起源与散布，提出民族是\"想象的共同体\"的观点。",
+                tags: ["美国", "政治", "民族主义", "历史", "理论", "想象", "共同体"],
+                geneType: "思辨批判家",
+                rating: 9.3
+            },
+            {
+                title: "革命之路",
+                author: "理查德·耶茨",
+                description: "描绘美国中产阶级夫妇的精神困境，批判美国梦的虚幻与压抑。",
+                tags: ["美国", "中产阶级", "婚姻", "美国梦", "批判", "精神", "困境"],
+                geneType: "思辨批判家",
+                rating: 9.2
+            },
+            {
+                title: "第二性",
+                author: "西蒙娜·德·波伏娃",
+                description: "女性主义经典，系统分析女性处境，提出\"女人不是天生的\"观点。",
+                tags: ["法国", "女性主义", "哲学", "性别", "社会", "分析", "经典"],
+                geneType: "思辨批判家",
+                rating: 9.6
+            },
+            {
+                title: "黑暗的心",
+                author: "约瑟夫·康拉德",
+                description: "殖民主义批判小说，通过刚果之旅揭示欧洲殖民者的道德堕落。",
+                tags: ["英国", "殖民主义", "道德", "黑暗", "非洲", "批判", "人性"],
+                geneType: "思辨批判家",
+                rating: 9.3
+            },
+            {
+                title: "看不见的人",
+                author: "拉尔夫·埃里森",
+                description: "美国黑人文学经典，探讨种族身份与社会 invisibility 的主题。",
+                tags: ["美国", "种族", "身份", "社会", "黑人", "批判", "存在"],
+                geneType: "思辨批判家",
+                rating: 9.4
+            },
+            {
+                title: "铁皮鼓",
+                author: "君特·格拉斯",
+                description: "德国战后文学经典，通过拒绝成长的侏儒视角批判纳粹历史。",
+                tags: ["德国", "战后", "纳粹", "历史", "批判", "成长", "荒诞"],
+                geneType: "思辨批判家",
+                rating: 9.3
+            },
+            {
+                title: "发条橙",
+                author: "安东尼·伯吉斯",
+                description: "探讨自由意志与行为矫正，批判极权社会对人性的扭曲。",
+                tags: ["英国", "自由意志", "暴力", "矫正", "极权", "人性", "科幻"],
+                geneType: "思辨批判家",
+                rating: 9.2
+            },
+            {
+                title: "午夜的孩子",
+                author: "萨尔曼·拉什迪",
+                description: "魔幻现实主义史诗，通过午夜之子的命运展现印度独立后的历史。",
+                tags: ["印度", "魔幻", "历史", "政治", "批判", "寓言", "多元"],
+                geneType: "思辨批判家",
+                rating: 9.4
+            },
+            {
+                title: "崩溃",
+                author: "贾雷德·戴蒙德",
+                description: "分析历史上社会崩溃的原因，探讨环境、政治与文化因素。",
+                tags: ["美国", "历史", "环境", "社会", "崩溃", "分析", "警示"],
+                geneType: "思辨批判家",
+                rating: 9.3
+            },
+            {
+                title: "美国精神的封闭",
+                author: "艾伦·布鲁姆",
+                description: "批判美国高等教育，指出相对主义导致精神封闭与灵魂枯萎。",
+                tags: ["美国", "教育", "哲学", "批判", "相对主义", "精神", "文化"],
+                geneType: "思辨批判家",
+                rating: 9.1
+            },
+            {
+                title: "编码宝典",
+                author: "尼尔·斯蒂芬森",
+                description: "科幻小说，融合密码学、历史与哲学，探讨信息、权力与自由。",
+                tags: ["美国", "科幻", "密码", "历史", "哲学", "信息", "权力"],
+                geneType: "思辨批判家",
+                rating: 9.2
+            },
+            {
+                title: "童年的消逝",
+                author: "尼尔·波兹曼",
+                description: "批判电子媒体导致童年概念消逝，分析媒介对文化的塑造作用。",
+                tags: ["美国", "媒介", "童年", "批判", "文化", "社会", "分析"],
+                geneType: "思辨批判家",
+                rating: 9.0
+            },
+            {
+                title: "东方学",
+                author: "爱德华·萨义德",
+                description: "后殖民理论经典，批判西方对东方的知识建构与权力关系。",
+                tags: ["美国", "后殖民", "批判", "东方", "西方", "权力", "知识"],
+                geneType: "思辨批判家",
+                rating: 9.3
+            }
+        ];
+
+        // 测试状态
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let userTags = [];
+
+        // DOM元素
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const resultContainer = document.getElementById('resultContainer');
+        const questionContainer = document.getElementById('questionContainer');
+        const navigationButtons = document.getElementById('navigationButtons');
+        const geneTypeName = document.getElementById('geneTypeName');
+        const geneTypeDesc = document.getElementById('geneTypeDesc');
+        const recommendations = document.getElementById('recommendations');
+        const retakeBtn = document.getElementById('retakeBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const moreBooksBtn = document.getElementById('moreBooksBtn');
+
+        // 当前推荐书籍的索引（用于"换一批"功能）
+        let currentRecommendationIndex = 0;
+        const RECOMMENDATIONS_PER_PAGE = 8;
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            setupEventListeners();
+            
+            // 初始化选项点击事件 - 修复版本
+            initOptionEvents();
+            
+            // 初始禁用下一题按钮
+            nextBtn.disabled = true;
+        });
+
+        // 设置事件监听器
+        function setupEventListeners() {
+            prevBtn.addEventListener('click', goToPrevQuestion);
+            nextBtn.addEventListener('click', goToNextQuestion);
+            retakeBtn.addEventListener('click', restartTest);
+            shareBtn.addEventListener('click', shareResult);
+            moreBooksBtn.addEventListener('click', generateMoreRecommendations);
+        }
+
+        // 修复的选项点击事件 - 使用更直接的方式
+        function initOptionEvents() {
+            // 直接为每个选项添加点击事件监听器
+            const allOptions = document.querySelectorAll('.option');
+            
+            allOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // 获取当前活动的问题
+                    const activeQuestion = document.querySelector('.question.active');
+                    if (!activeQuestion) return;
+                    
+                    // 获取当前问题的所有选项
+                    const currentOptions = activeQuestion.querySelectorAll('.option');
+                    
+                    // 移除当前问题所有选项的选中状态
+                    currentOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // 为当前点击的选项添加选中状态
+                    this.classList.add('selected');
+                    
+                    // 记录答案
+                    const value = this.getAttribute('data-value');
+                    const questionId = activeQuestion.id.replace('question', '');
+                    const questionIndex = parseInt(questionId) - 1;
+                    
+                    userAnswers[questionIndex] = value;
+                    
+                    // 添加对应的标签
+                    const questionData = questions[questionIndex];
+                    const selectedOption = questionData.options.find(opt => opt.value === value);
+                    
+                    if (selectedOption && selectedOption.tags) {
+                        // 避免重复添加标签
+                        selectedOption.tags.forEach(tag => {
+                            if (!userTags.includes(tag)) {
+                                userTags.push(tag);
+                            }
+                        });
+                    }
+                    
+                    // 启用下一题按钮
+                    nextBtn.disabled = false;
+                });
+            });
+        }
+
+        // 更新进度
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+            
+            // 更新按钮状态
+            prevBtn.style.display = currentQuestion === 0 ? 'none' : 'flex';
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.innerHTML = '查看结果 <i class="fas fa-chart-bar"></i>';
+                nextBtn.classList.add('btn-submit');
+            } else {
+                nextBtn.innerHTML = '下一题 <i class="fas fa-arrow-right"></i>';
+                nextBtn.classList.remove('btn-submit');
+            }
+            
+            // 如果没有选择当前问题的答案，禁用下一题按钮
+            nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+        }
+
+        // 切换到上一题
+        function goToPrevQuestion() {
+            if (currentQuestion > 0) {
+                // 隐藏当前问题
+                document.getElementById(`question${currentQuestion + 1}`).classList.remove('active');
+                
+                // 显示上一题
+                currentQuestion--;
+                document.getElementById(`question${currentQuestion + 1}`).classList.add('active');
+                
+                updateProgress();
+                
+                // 如果上一题有答案，恢复选中状态
+                if (userAnswers[currentQuestion]) {
+                    const options = document.querySelectorAll(`#question${currentQuestion + 1} .option`);
+                    options.forEach(option => {
+                        if (option.getAttribute('data-value') === userAnswers[currentQuestion]) {
+                            option.classList.add('selected');
+                        }
+                    });
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.disabled = true;
+                }
+            }
+        }
+
+        // 切换到下一题或查看结果
+        function goToNextQuestion() {
+            // 如果没有选择答案，不允许前进
+            if (userAnswers[currentQuestion] === undefined) {
+                alert('请先选择一个选项！');
+                return;
+            }
+            
+            // 如果是最后一题，显示结果
+            if (currentQuestion === questions.length - 1) {
+                showResults();
+                return;
+            }
+            
+            // 隐藏当前问题
+            document.getElementById(`question${currentQuestion + 1}`).classList.remove('active');
+            
+            // 显示下一题
+            currentQuestion++;
+            document.getElementById(`question${currentQuestion + 1}`).classList.add('active');
+            
+            updateProgress();
+            
+            // 如果下一题有答案，恢复选中状态
+            if (userAnswers[currentQuestion]) {
+                const options = document.querySelectorAll(`#question${currentQuestion + 1} .option`);
+                options.forEach(option => {
+                    if (option.getAttribute('data-value') === userAnswers[currentQuestion]) {
+                        option.classList.add('selected');
+                    }
+                });
+                nextBtn.disabled = false;
+            } else {
+                nextBtn.disabled = true;
+            }
+        }
+
+        // 显示结果
+        function showResults() {
+            console.log("显示结果页面");
+            console.log("用户答案:", userAnswers);
+            console.log("用户标签:", userTags);
+            
+            // 分析文学基因类型
+            const userGeneType = analyzeGeneType();
+            
+            // 更新UI显示结果
+            geneTypeName.textContent = userGeneType.name;
+            geneTypeDesc.textContent = userGeneType.description;
+            
+            // 生成推荐书籍
+            generateRecommendations(userGeneType);
+            
+            // 隐藏问题和导航，显示结果
+            questionContainer.style.display = 'none';
+            navigationButtons.style.display = 'none';
+            document.querySelector('.progress-container').style.display = 'none';
+            
+            // 显示结果容器（添加动画）
+            setTimeout(() => {
+                resultContainer.classList.add('show');
+            }, 100);
+        }
+
+        // 分析文学基因类型
+        function analyzeGeneType() {
+            // 计算每个基因类型的匹配度
+            const scores = geneTypes.map(geneType => {
+                let score = 0;
+                userTags.forEach(tag => {
+                    if (geneType.tags.includes(tag)) {
+                        score++;
+                    }
+                });
+                return { ...geneType, score };
+            });
+            
+            console.log("各基因类型得分:", scores);
+            
+            // 找到最高分
+            const maxScore = Math.max(...scores.map(s => s.score));
+            const topTypes = scores.filter(s => s.score === maxScore);
+            
+            console.log("最高分:", maxScore);
+            console.log("最高分类型:", topTypes);
+            
+            // 如果有多个最高分，随机选择一个
+            return topTypes[Math.floor(Math.random() * topTypes.length)];
+        }
+
+        // 生成推荐书籍
+        function generateRecommendations(geneType) {
+            console.log("开始生成推荐书籍，基因类型:", geneType.name);
+            
+            // 筛选匹配基因类型的书籍
+            const matchedBooks = bookDatabase.filter(book => book.geneType === geneType.name);
+            console.log("匹配的书籍数量:", matchedBooks.length);
+            
+            // 如果匹配的书籍不足，补充一些其他书籍
+            let recommendedBooks = [...matchedBooks];
+            console.log("初始推荐书籍:", recommendedBooks.length);
+            
+            if (recommendedBooks.length < 4) {
+                console.log("匹配书籍不足，补充其他书籍");
+                const otherBooks = bookDatabase.filter(book => book.geneType !== geneType.name);
+                const randomBooks = otherBooks
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 4 - recommendedBooks.length);
+                recommendedBooks = [...recommendedBooks, ...randomBooks];
+            }
+            
+            // 限制最多显示8本书
+            recommendedBooks = recommendedBooks.slice(0, 8);
+            console.log("最终推荐书籍数量:", recommendedBooks.length);
+            
+            // 清空推荐容器
+            recommendations.innerHTML = '';
+            
+            // 如果还是没有书籍，显示提示信息
+            if (recommendedBooks.length === 0) {
+                recommendations.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <i class="fas fa-book" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                        <p>暂无推荐书籍，请尝试重新测试</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 生成书籍推荐HTML
+            recommendedBooks.forEach((book, index) => {
+                console.log(`生成书籍 ${index + 1}:`, book.title);
+                
+                const bookElement = document.createElement('div');
+                bookElement.className = 'book-recommendation';
+                
+                // 生成标签HTML（只显示前3个标签）
+                const tagsHtml = book.tags ? 
+                    book.tags.slice(0, 3).map(tag => 
+                        `<span class="book-tag">${tag}</span>`
+                    ).join('') : '';
+                
+                bookElement.innerHTML = `
+                    <h4 class="book-title">${book.title || '未命名书籍'}</h4>
+                    <p class="book-author">${book.author || '未知作者'}</p>
+                    ${tagsHtml ? `<div class="book-meta">${tagsHtml}</div>` : ''}
+                    <p class="book-desc">${book.description || '暂无描述'}</p>
+                    ${book.rating ? `<div class="book-rating">★ ${book.rating}/10</div>` : ''}
+                `;
+                recommendations.appendChild(bookElement);
+            });
+            
+            console.log("书籍推荐生成完成");
+        }
+
+        // 生成更多推荐（换一批）
+        function generateMoreRecommendations() {
+            const geneTypeName = document.getElementById('geneTypeName').textContent;
+            const geneType = geneTypes.find(type => type.name === geneTypeName);
+            if (geneType) {
+                generateRecommendations(geneType);
+            }
+        }
+
+// 分享结果
+function shareResult() {
+    const geneType = document.getElementById('geneTypeName').textContent;
+    // 你指定的分享文案
+    const shareText = `我刚完成了文学基因测试，我的文学DNA是：${geneType}！你也快来严论APP测试一下吧！\n链接：https://yswxstudy.my.canvasite.cn/ylapp \n功能入口：首页→文学基因测试。`;
+
+    // 使用现代剪贴板API
+    navigator.clipboard.writeText(shareText)
+        .then(() => {
+            // 复制成功提示
+            alert('文案已复制到剪贴板！\n快去分享给你的朋友吧！');
+            console.log('分享文案复制成功');
+        })
+        .catch(err => {
+            // 如果现代API失败，尝试备用方案
+            console.error('现代剪贴板API失败:', err);
+            useFallbackCopyMethod(shareText);
+        });
+}
+
+// 备用复制方法（兼容旧浏览器）
+function useFallbackCopyMethod(text) {
+    // 创建一个临时的textarea元素
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    
+    // 选中并复制文本
+    textArea.select();
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            alert('文案已复制到剪贴板！\n快去分享给你的朋友吧！');
+            console.log('备用复制方法成功');
+        } else {
+            throw new Error('复制命令失败');
+        }
+    } catch (err) {
+        console.error('备用复制方法失败:', err);
+        // 最终方案：提示用户手动复制
+        promptManualCopy(text);
+    } finally {
+        // 清理临时元素
+        document.body.removeChild(textArea);
+    }
+}
+
+// 提示用户手动复制
+function promptManualCopy(text) {
+    const shouldCopy = confirm(
+        '自动复制失败。\n\n请手动复制以下文案：\n\n' +
+        '------------------------\n' +
+        text +
+        '\n------------------------\n\n' +
+        '按"确定"选中文案，然后按Ctrl+C(Windows)或Cmd+C(Mac)复制。'
+    );
+    
+    if (shouldCopy) {
+        // 创建一个临时元素让用户手动选择
+        const tempDiv = document.createElement('div');
+        tempDiv.style.position = 'fixed';
+        tempDiv.style.top = '0';
+        tempDiv.style.left = '0';
+        tempDiv.style.opacity = '0';
+        tempDiv.textContent = text;
+        document.body.appendChild(tempDiv);
+        
+        // 选中文本
+        const range = document.createRange();
+        range.selectNodeContents(tempDiv);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        
+        // 短暂延迟后移除元素
+        setTimeout(() => {
+            document.body.removeChild(tempDiv);
+            selection.removeAllRanges();
+        }, 100);
+    }
+}
+
+        // 重新开始测试
+        function restartTest() {
+            // 重置状态
+            currentQuestion = 0;
+            userAnswers = [];
+            userTags = [];
+            currentRecommendationIndex = 0;
+            
+            // 隐藏结果，显示问题和导航
+            resultContainer.classList.remove('show');
+            questionContainer.style.display = 'block';
+            navigationButtons.style.display = 'flex';
+            document.querySelector('.progress-container').style.display = 'block';
+            
+            // 隐藏所有问题，显示第一个问题
+            document.querySelectorAll('.question').forEach((q, index) => {
+                q.classList.remove('active');
+                if (index === 0) {
+                    q.classList.add('active');
+                }
+            });
+            
+            // 清除所有选项的选中状态
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // 更新进度
+            updateProgress();
+            
+            // 禁用下一题按钮
+            nextBtn.disabled = true;
+        }
+    </script>
+</body>
+</html>

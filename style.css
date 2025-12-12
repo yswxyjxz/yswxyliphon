@@ -1,0 +1,631 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: "SimSun", serif;
+    background: #F5F0E6;
+    color: #333;
+    line-height: 1.6;
+    padding: 0;
+}
+/* 去除点击高亮 */
+a, .search-btn {
+    text-decoration: none;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+}
+a:active, a:focus {
+    background: none;
+    outline: none;
+}
+/* 顶部咖色区域 */
+.top-brown-area {
+    background: #8B5A2B;
+    color: #fff;
+    padding: 30px 15px 40px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+.top-brown-area::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    z-index: 0;
+    opacity: 0.3;
+    animation: float 20s linear infinite;
+}
+.top-brown-area:hover {
+    background: #724925;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 90, 43, 0.2);
+}
+.top-brown-area:hover .phone-container {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+.recommend {
+    font-size: 32px;
+    font-family: "STKaiti", cursive;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+.title-box {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+.title-box h2 {
+    font-size: 28px;
+    font-family: "STKaiti", cursive;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #F5DEB3, #FFF8DC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.title-box p {
+    font-size: 16px;
+    opacity: 0.95;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+/* 重新设计的手机容器 */
+.phone-container {
+    width: 220px;
+    height: 380px;
+    margin: 0 auto;
+    border-radius: 40px;
+    overflow: hidden;
+    background: linear-gradient(145deg, #F5F0E6, #E6D5B8);
+    position: relative;
+    z-index: 1;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(210, 180, 140, 0.3),
+        0 0 0 3px rgba(139, 90, 43, 0.1),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 12px;
+}
+.phone-container::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    border: 1px solid rgba(210, 180, 140, 0.6);
+    border-radius: 34px;
+    z-index: 1;
+    pointer-events: none;
+}
+.phone-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 40px;
+    background: linear-gradient(
+        135deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 20%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(0, 0, 0, 0.05) 80%,
+        transparent 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+.phone-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+    transition: transform 0.8s ease;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+.top-brown-area:hover .phone-container img {
+    transform: scale(1.05);
+}
+/* 修复：确保图片容器可以点击 */
+.phone-container {
+    cursor: pointer;
+}
+.phone-container img {
+    cursor: pointer;
+    pointer-events: auto;
+}
+/* 添加装饰性元素 */
+.phone-decoration {
+    position: absolute;
+    z-index: 0;
+    opacity: 0.6;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    pointer-events: none;
+}
+.deco-1 {
+    top: 20%;
+    left: 10%;
+    width: 40px;
+    height: 40px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23F5DEB3'%3E%3Cpath d='M12,2C8.13,2,5,5.13,5,9c0,5.25,7,13,7,13s7-7.75,7-13C19,5.13,15.87,2,12,2z M12,11.5c-1.38,0-2.5-1.12-2.5-2.5 s1.12-2.5,2.5-2.5s2.5,1.12,2.5,2.5S13.38,11.5,12,11.5z'/%3E%3C/svg%3E");
+    animation: floatLeaf 8s ease-in-out infinite;
+}
+.deco-2 {
+    bottom: 15%;
+    right: 8%;
+    width: 35px;
+    height: 35px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D2B48C'%3E%3Cpath d='M17,8C8,10,5.9,16.17,3.82,21.34L5.71,22l1-2.12c0.63,0,1.26-0.09,1.88-0.26c1.78-0.47,3-2.11,3-3.99 c0-1.89,1.21-3.53,3-4c0.31-0.08,0.63-0.14,0.95-0.18C16.21,10.72,16.83,9.38,17,8z'/%3E%3C/svg%3E");
+    animation: floatLeaf 10s ease-in-out infinite 1s;
+}
+.deco-3 {
+    top: 40%;
+    right: 12%;
+    width: 25px;
+    height: 25px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2396C586'%3E%3Cpath d='M12,3C7.03,3,3,7.03,3,12c0,4.97,4.03,9,9,9s9-4.03,9-9C21,7.03,16.97,3,12,3z M12,19c-3.87,0-7-3.13-7-7 c0-3.87,3.13-7,7-7s7,3.13,7,7C19,15.87,15.87,19,12,19z'/%3E%3C/svg%3E");
+    animation: floatLeaf 12s ease-in-out infinite 0.5s;
+}
+/* 动画 */
+@keyframes float {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-30px, 30px) rotate(360deg); }
+}
+@keyframes floatLeaf {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+}
+/* 适配小屏幕 */
+@media (max-width: 768px) {
+    .phone-container {
+        width: 180px;
+        height: 320px;
+        padding: 10px;
+    }
+    .title-box h2 {
+        font-size: 24px;
+    }
+}
+/* 图片加载占位符 */
+.phone-container.loading {
+    background: linear-gradient(90deg, #E6D5B8 25%, #F5F0E6 50%, #E6D5B8 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+/* 博客横幅 */
+.blog-banner {
+    background: linear-gradient(135deg, #8B5A2B, #D2B48C);
+    color: #fff;
+    text-align: center;
+    padding: 28px 15px;
+    margin: 30px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.blog-banner:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(139, 90, 43, 0.2);
+}
+.blog-banner h3 {
+    font-size: 22px;
+    font-family: "STKaiti", cursive;
+    margin-bottom: 8px;
+}
+.blog-banner p {
+    font-size: 16px;
+    opacity: 0.95;
+}
+/* 功能按钮 */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    margin: 0 15px 40px;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+}
+.feature-item {
+    text-align: center;
+    min-width: 70px;
+}
+.feature-item i {
+    font-size: 36px;
+    color: #8B5A2B;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+.feature-item:hover i {
+    transform: translateY(-5px) scale(1.1);
+    color: #724925;
+}
+.feature-item p {
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.feature-item:hover p {
+    color: #724925;
+    font-weight: bold;
+}
+.feature-item a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+/* 页面导航 */
+.page-nav {
+    margin: 0 15px 40px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 15px;
+}
+.page-nav ul {
+    list-style: none;
+}
+.page-nav li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #F5F0E6;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.page-nav li:hover {
+    background: #F9F5F0;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.page-nav li:last-child {
+    border-bottom: none;
+}
+.page-nav i {
+    color: #8B5A2B;
+    font-size: 20px;
+}
+.page-nav span {
+    font-size: 17px;
+}
+/* 搜索提示 */
+.search-tip {
+    background: #fff;
+    border: 2px solid #E6D5B8;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 0 15px 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.search-tip i {
+    color: #8B5A2B;
+    font-size: 24px;
+}
+.search-tip .text {
+    flex: 1;
+}
+.search-tip .text span {
+    font-size: 16px;
+    display: block;
+}
+.search-tip .text span:last-child {
+    color: #666;
+    font-size: 14px;
+    margin-top: 3px;
+}
+.search-btn {
+    background: #8B5A2B;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.search-btn:hover {
+    background: #724925;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 90, 43, 0.3);
+}
+/* 文学入门指南样式 */
+.beginner-guide {
+    background: #fff;
+    border: 2px solid #E6D5B8;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 0 15px 40px;
+}
+.guide-header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #F5F0E6;
+}
+.guide-header h3 {
+    font-size: 22px;
+    font-family: "STKaiti", cursive;
+    color: #8B5A2B;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.guide-header p {
+    font-size: 15px;
+    color: #666;
+}
+.guide-section {
+    margin-bottom: 30px;
+}
+.guide-section h4 {
+    font-size: 18px;
+    color: #8B5A2B;
+    margin-bottom: 15px;
+    font-family: "STKaiti", cursive;
+    padding-left: 10px;
+    border-left: 3px solid #8B5A2B;
+}
+/* 书单样式 */
+.book-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.book-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    background: #F9F5F0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.book-item:hover {
+    background: #F5F0E6;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 90, 43, 0.1);
+}
+.book-cover {
+    width: 50px;
+    height: 50px;
+    background: #8B5A2B;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+.book-item:hover .book-cover {
+    background: #724925;
+    transform: rotate(5deg);
+}
+.book-info h5 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+.book-item:hover .book-info h5 {
+    color: #8B5A2B;
+}
+.book-info p {
+    font-size: 13px;
+    color: #666;
+}
+/* 阅读建议样式 */
+.tips {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.tip-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    background: #F9F5F0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.tip-item:hover {
+    background: #F5F0E6;
+    transform: translateY(-2px);
+}
+.tip-item i {
+    color: #8B5A2B;
+    font-size: 18px;
+    margin-top: 2px;
+    transition: all 0.3s ease;
+}
+.tip-item:hover i {
+    transform: scale(1.2) rotate(5deg);
+}
+.tip-item h5 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+.tip-item:hover h5 {
+    color: #8B5A2B;
+}
+.tip-item p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+/* 阅读计划样式 */
+.reading-plan {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.plan-step {
+    display: flex;
+    gap: 15px;
+    padding: 12px;
+    background: #F9F5F0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.plan-step:hover {
+    background: #F5F0E6;
+    transform: translateY(-2px);
+}
+.step-number {
+    width: 30px;
+    height: 30px;
+    background: #8B5A2B;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+.plan-step:hover .step-number {
+    background: #724925;
+    transform: scale(1.1);
+}
+.step-content h5 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+.plan-step:hover .step-content h5 {
+    color: #8B5A2B;
+}
+.step-content p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+/* 行动按钮样式 */
+.action-section {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+.action-btn {
+    flex: 1;
+    min-width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: #8B5A2B;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.action-btn:hover {
+    background: #724925;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(139, 90, 43, 0.3);
+}
+.action-btn.outline {
+    background: transparent;
+    border: 1px solid #8B5A2B;
+    color: #8B5A2B;
+}
+.action-btn.outline:hover {
+    background: #F5F5F0;
+    border-color: #724925;
+    color: #724925;
+}
+/* 书籍卡片 */
+.books {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0 15px 40px;
+}
+.book-card {
+    background: #fff;
+    border: 2px solid #E6D5B8;
+    padding: 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.book-card:hover {
+    background: #F9F5F0;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(139, 90, 43, 0.1);
+    border-color: #8B5A2B;
+}
+.book-card h4 {
+    font-size: 19px;
+    color: #8B5A2B;
+    margin-bottom: 10px;
+    font-family: "STKaiti", cursive;
+    transition: all 0.3s ease;
+}
+.book-card:hover h4 {
+    color: #724925;
+    transform: translateX(5px);
+}
+.book-card p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #444;
+    transition: all 0.3s ease;
+}
+.book-card:hover p {
+    color: #333;
+}
+/* 修复：确保所有可点击元素都有合适的光标 */
+a, button, .book-item, .tip-item, .plan-step, .book-card, .feature-item, .page-nav li {
+    cursor: pointer;
+}
+/* 修复：确保装饰元素不会阻挡点击 */
+.phone-decoration {
+    pointer-events: none;
+}
+/* 修复：确保伪元素不会阻挡点击 */
+.phone-container::before, .phone-container::after {
+    pointer-events: none;
+}

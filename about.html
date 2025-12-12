@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>关于我们 - 严肃文学研究小组</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #F5F0E6;
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 40px;
+            min-height: 100vh;
+        }
+        
+        /* 返回按钮 */
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 18px 15px 15px;
+            color: #8B5A2B;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+            background: #F5F0E6;
+            z-index: 10;
+            border-bottom: 1px solid #E6D5B8;
+        }
+        
+        .back-btn i {
+            font-size: 18px;
+        }
+        
+        /* 英雄区域 */
+        .hero-section {
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #8B5A2B 0%, #A67B5B 100%);
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+        
+        .hero-title {
+            font-family: "STKaiti", cursive;
+            font-size: 28px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+            max-width: 280px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        /* 内容区域 */
+        .content-container {
+            padding: 0 20px;
+        }
+        
+        /* 章节样式 */
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 22px 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(139, 90, 43, 0.08);
+            border: 1px solid #E6D5B8;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(139, 90, 43, 0.12);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #F5F0E6;
+        }
+        
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: #8B5A2B;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .section-title {
+            font-family: "STKaiti", cursive;
+            font-size: 20px;
+            color: #8B5A2B;
+        }
+        
+        .section-content {
+            color: #444;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        
+        .section-content p {
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+        
+        .section-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* 列表样式 */
+        .belief-list {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+        
+        .belief-list li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 8px;
+        }
+        
+        .belief-list li::before {
+            content: "•";
+            color: #8B5A2B;
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+        }
+        
+        /* 使命列表 */
+        .mission-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 18px 0;
+        }
+        
+        .mission-item {
+            background: #F9F5F0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #8B5A2B;
+        }
+        
+        .mission-item p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* 坚持卡片 */
+        .persistence-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 18px 0;
+        }
+        
+        .persistence-card {
+            background: #F9F5F0;
+            border-radius: 8px;
+            padding: 18px;
+            border: 1px solid #E6D5B8;
+        }
+        
+        .persistence-card h4 {
+            color: #8B5A2B;
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .persistence-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+            margin: 0;
+        }
+        
+        /* 邀请部分 */
+        .invite-section {
+            background: linear-gradient(135deg, #F9F5F0 0%, #F5F0E6 100%);
+            border: 1px solid #E6D5B8;
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-align: center;
+            margin-top: 25px;
+        }
+        
+        .invite-title {
+            font-family: "STKaiti", cursive;
+            font-size: 22px;
+            color: #8B5A2B;
+            margin-bottom: 15px;
+        }
+        
+        .invite-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid #E6D5B8;
+        }
+        
+        .contact-email {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #8B5A2B;
+            font-weight: 500;
+        }
+        
+        .contact-email a {
+            color: #8B5A2B;
+            text-decoration: none;
+        }
+        
+        .contact-email a:hover {
+            text-decoration: underline;
+        }
+        
+        .principles {
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        /* 引用样式 */
+        .quote {
+            font-size: 15px;
+            color: #8B5A2B;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+            margin: 25px 0;
+            border-top: 1px dashed #E6D5B8;
+            border-bottom: 1px dashed #E6D5B8;
+        }
+        
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 24px;
+            color: #D2B48C;
+            vertical-align: middle;
+        }
+        
+        /* 底部 */
+        .page-footer {
+            text-align: center;
+            padding: 25px 15px 15px;
+            color: #666;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        
+        .page-footer p {
+            margin-bottom: 8px;
+        }
+        
+        /* 响应式调整 */
+        @media (min-width: 375px) {
+            .hero-title {
+                font-size: 30px;
+            }
+            
+            .section-title {
+                font-size: 21px;
+            }
+        }
+        
+        @media (min-width: 414px) {
+            .hero-title {
+                font-size: 32px;
+            }
+            
+            .hero-subtitle {
+                font-size: 17px;
+                max-width: 320px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            body {
+                max-width: 700px;
+                margin: 0 auto;
+                padding: 10px 10px 40px;
+            }
+            
+            .back-btn {
+                padding: 15px 0 15px;
+                border-bottom: 1px solid #E6D5B8;
+                margin-bottom: 20px;
+                position: static;
+                background: transparent;
+            }
+            
+            .hero-section {
+                border-radius: 15px;
+                margin-bottom: 30px;
+            }
+            
+            .section {
+                border-radius: 15px;
+                padding: 25px 22px;
+            }
+            
+            .mission-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .persistence-cards {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .persistence-card {
+                flex: 1;
+                min-width: 250px;
+            }
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #F5F0E6;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #D2B48C;
+            border-radius: 3px;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+        .section:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- 返回按钮 -->
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        <span>返回首页</span>
+    </a>
+    
+    <!-- 英雄区域 -->
+    <div class="hero-section">
+        <h1 class="hero-title">严肃文学研究小组</h1>
+        <p class="hero-subtitle">在技术的喧嚣与功利的浪潮中，我们守护着文字的最后一片净土。</p>
+    </div>
+    
+    <div class="content-container">
+        <!-- 缘起 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <h2 class="section-title">缘起 · 在工科土壤中播种人文</h2>
+            </div>
+            <div class="section-content">
+                <p>河南大学濮阳工学院严肃文学研究小组，诞生于一片看似与文学格格不入的土壤。我们是一群在工科语境下，依然执着追寻人文精神与思想深度的同行者。</p>
+                <p>在代码与公式的世界里，我们发现了另一种语言的力量——那是文学的语言，是关乎灵魂、关乎存在、关乎人类永恒命题的语言。</p>
+            </div>
+        </div>
+        
+        <!-- 信念 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2 class="section-title">信念 · 何为"严肃"</h2>
+            </div>
+            <div class="section-content">
+                <p>对我们而言，"严肃"二字意味着：</p>
+                <ul class="belief-list">
+                    <li><strong>对文字的敬畏：</strong>拒绝浮华的辞藻，追求思想的深度</li>
+                    <li><strong>对真实的直面：</strong>不回避人性的复杂与生活的沉重</li>
+                    <li><strong>对经典的传承：</strong>在巨人的肩膀上，寻找当代的表达</li>
+                    <li><strong>对思想的锤炼：</strong>每一篇文章都是灵魂的叩问</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 使命 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h2 class="section-title">使命 · 为何而书写</h2>
+            </div>
+            <div class="section-content">
+                <p>我们相信，在这个信息爆炸的时代，严肃文学不是逃避，而是更深层次的介入。它让我们：</p>
+                <div class="mission-list">
+                    <div class="mission-item">
+                        <p>在碎片化阅读中保持思想的完整性</p>
+                    </div>
+                    <div class="mission-item">
+                        <p>在实用主义盛行的今天坚守精神的超越性</p>
+                    </div>
+                    <div class="mission-item">
+                        <p>在众声喧哗中听见内心最真实的声音</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 我们的坚持 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <h2 class="section-title">我们的坚持</h2>
+            </div>
+            <div class="section-content">
+                <div class="persistence-cards">
+                    <div class="persistence-card">
+                        <h4>纯粹的文学追求</h4>
+                        <p>不迎合市场，不追求流量，只对艺术的真实负责。</p>
+                    </div>
+                    <div class="persistence-card">
+                        <h4>深度的思想交流</h4>
+                        <p>每周的读书会、定期的作品研讨、深度的文学批评——我们相信思想在碰撞中升华。</p>
+                    </div>
+                    <div class="persistence-card">
+                        <h4>跨学科的视野</h4>
+                        <p>工科的严谨思维与文学的感性表达在此交汇，形成独特的批判视角。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 邀请 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h2 class="section-title">邀请</h2>
+            </div>
+            <div class="section-content">
+                <p>欢迎所有未被磨灭的好奇心，所有对文字怀有敬意的灵魂，所有在喧嚣中依然倾听内心声音的同行者。</p>
+                <p>在这里，我们不仅是读者和作者，更是一同探索人类精神边界的旅人。</p>
+            </div>
+        </div>
+        
+        <!-- 联系信息 -->
+        <div class="invite-section">
+            <h3 class="invite-title">加入我们</h3>
+            <p class="invite-text">如果你也相信文字的力量，愿意与我们一同探索严肃文学的深邃世界，欢迎与我们联系。</p>
+            
+            <div class="contact-info">
+                <div class="contact-email">
+                    <i class="fas fa-envelope"></i>
+                    <span>联系邮箱：</span>
+                    <a href="mailto:yswxyjxz@163.com">yswxyjxz@163.com</a>
+                </div>
+                
+                <p class="principles">交流原则：真诚、深入、尊重、包容</p>
+            </div>
+        </div>
+        
+        <!-- 引用 -->
+        <div class="quote">
+            文学不能改变世界，但文学可以改变人，而人可以改变世界。<br>
+            —— 我们深信于此
+        </div>
+    </div>
+    
+    <!-- 底部 -->
+    <!-- 底部 -->
+    <div class="page-footer">
+        <p>严肃文学研究小组 ©2025</p>
+        <p>
+            <a href="https://www.canva.cn/design/DAG2tI-X5Eo/yNZS3KG_wrvq61uIkRmmHw/view?utm_content=DAG2tI-X5Eo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf2814c0ce4"
+                target="_blank" style="color: #8B5A2B; margin: 0 10px;">服务协议</a>
+            |
+            <a href="https://www.canva.cn/design/DAG2tHFGnAs/Oj6a9tqnplgxHAqIGMx9hA/view?utm_content=DAG2tHFGnAs&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h958e75ee7e"
+                target="_blank" style="color: #8B5A2B; margin: 0 10px;">隐私政策</a>
+        </p>
+    </div>
+    
+    <script>
+        // 添加页面交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 邮箱点击复制反馈
+            const emailLink = document.querySelector('.contact-email a');
+            if (emailLink) {
+                emailLink.addEventListener('click', function(e) {
+                    // 这里可以添加复制邮箱到剪贴板的功能
+                    console.log('邮箱链接被点击:', this.href);
+                });
+            }
+            
+            // 滚动时渐显效果
+            const sections = document.querySelectorAll('.section');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // 页面加载动画
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.4s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

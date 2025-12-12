@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>严肃文学研究小组</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 新增：互动功能区域样式 */
+        .interactive-features {
+            margin: 0 15px 40px;
+        }
+        
+        .interactive-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #E6D5B8;
+        }
+        
+        .interactive-header h3 {
+            font-size: 22px;
+            font-family: "STKaiti", cursive;
+            color: #8B5A2B;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .interactive-header h3 i {
+            font-size: 24px;
+        }
+        
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .interactive-card {
+            background: #fff;
+            border: 2px solid #E6D5B8;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(139, 90, 43, 0.15);
+            border-color: #8B5A2B;
+        }
+        
+        .interactive-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .interactive-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(139, 90, 43, 0.2), rgba(139, 90, 43, 0.4));
+            z-index: 1;
+        }
+        
+        .interactive-image.gene-test {
+            background-image: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .interactive-image.message-board {
+            background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .interactive-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(139, 90, 43, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+        
+        .interactive-card:hover .interactive-overlay {
+            opacity: 1;
+        }
+        
+        .overlay-content {
+            text-align: center;
+            color: #fff;
+        }
+        
+        .overlay-content i {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .overlay-content span {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .interactive-content {
+            padding: 20px;
+        }
+        
+        .interactive-content h4 {
+            font-size: 20px;
+            color: #8B5A2B;
+            margin-bottom: 10px;
+            font-family: "STKaiti", cursive;
+        }
+        
+        .interactive-content p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .interactive-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #8B5A2B;
+            font-size: 13px;
+        }
+        
+        .stat-item i {
+            font-size: 14px;
+        }
+        
+        .interactive-tag {
+            display: inline-block;
+            background: #F9F5F0;
+            color: #8B5A2B;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .interactive-card:hover .interactive-tag {
+            background: #8B5A2B;
+            color: #fff;
+        }
+        
+        @media (max-width: 768px) {
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .interactive-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<a href="https://yswxstudy.my.canvasite.cn/wcyl/#%E4%B8%A5%E8%AE%BA%E6%96%87%E5%88%9B-%E7%A7%8D%E5%AD%90%E4%B9%A6%E7%AD%BE" target="_blank">
+    <section class="top-brown-area">
+        <div class="recommend">推荐</div>
+        <div class="title-box">
+            <h2>种出一抹绿色</h2>
+            <p>严论文创种子书签现已上架</p>
+        </div>
+        <div class="phone-container">
+            <img src="img/1.jpg" alt="植物之旅">
+        </div>
+        <!-- 添加装饰性元素 -->
+        <div class="phone-decoration deco-1"></div>
+        <div class="phone-decoration deco-2"></div>
+        <div class="phone-decoration deco-3"></div>
+    </section>
+</a>
+
+    <!-- 博客链接（标准a标签） -->
+    <a href="http://yswxstudy.top" target="_blank">
+        <section class="blog-banner">
+            <h3>严肃文学交流博客</h3>
+            <p>点击进入 · 深度交流</p>
+        </section>
+    </a>
+
+    <!-- 功能按钮（标准i标签+链接） -->
+    <section class="features">
+        <div class="feature-item">
+            <a href="https://yswxstudy.my.canvasite.cn/1119/#page-0" target="_blank">
+                <i class="fas fa-user-pen"></i>
+                <p>代表作家</p>
+            </a>
+        </div>
+        <div class="feature-item">
+            <a href="https://www.nlc.cn/web/index.shtml" target="_blank">
+                <i class="fas fa-book-open"></i>
+                <p>三味书屋</p>
+            </a>
+        </div>
+        <div class="feature-item">
+            <a href="https://www.chinanews.com.cn/" target="_blank">
+                <i class="fas fa-newspaper"></i>
+                <p>新闻资讯</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- 导航栏（标准i标签+链接） -->
+    <section class="page-nav">
+        <ul>
+            <li>
+                <a href="https://yswxstudy.my.canvasite.cn/1119/#%E4%B9%A6%E7%B1%8D%E6%8E%A8%E8%8D%90" target="_blank">
+                    <i class="fas fa-book"></i>
+                    <span>书籍推荐</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://yswxstudy.my.canvasite.cn/1119/#%E5%8A%A0%E5%85%A5%E7%A4%BE%E7%BE%A4" target="_blank">
+                    <i class="fas fa-users"></i>
+                    <span>加入社群</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://yswxstudy.my.canvasite.cn/1119/#%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC" target="_blank">
+                    <i class="fas fa-envelope"></i>
+                    <span>关于我们</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <!-- 新增：互动功能区域 -->
+    <section class="interactive-features">
+        <div class="interactive-header">
+            <h3><i class="fas fa-puzzle-piece"></i> 互动功能</h3>
+            <p style="color: #666; font-size: 14px;">探索你的文学基因，分享阅读感悟</p>
+        </div>
+        
+        <div class="interactive-grid">
+            <!-- 文学基因测试 -->
+            <a href="literature_gene_test.html" class="interactive-card">
+                <div class="interactive-image gene-test">
+                    <div class="interactive-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-play-circle"></i>
+                            <span>开始测试</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="interactive-content">
+                    <h4>文学基因测试</h4>
+                    <p>通过10个精心设计的问题，发现你的文学DNA，获得个性化书籍推荐。了解自己的阅读偏好，找到最适合你的文学世界。</p>
+                    <div>
+                        <span class="interactive-tag">趣味测试</span>
+                        <span class="interactive-tag">个性化推荐</span>
+                        <span class="interactive-tag">阅读偏好分析</span>
+                    </div>
+                    <div class="interactive-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-question-circle"></i>
+                            <span>10个问题</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-book"></i>
+                            <span>100+书籍推荐</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-clock"></i>
+                            <span>5分钟完成</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- 留言板 -->
+            <a href="liuyan.html" class="interactive-card">
+                <div class="interactive-image message-board">
+                    <div class="interactive-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-comment"></i>
+                            <span>进入留言板</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="interactive-content">
+                    <h4>留言板</h4>
+                    <p>与严肃文学爱好者交流讨论，分享阅读感悟、提出疑问、推荐书籍。支持多账号登录，实时互动，共同营造深度文学交流环境。</p>
+                    <div>
+                        <span class="interactive-tag">实时交流</span>
+                        <span class="interactive-tag">多账号登录</span>
+                        <span class="interactive-tag">安全审核</span>
+                        <span class="interactive-tag">深度讨论</span>
+                    </div>
+                    <div class="interactive-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-user-friends"></i>
+                            <span>社区互动</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>安全环境</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-reply"></i>
+                            <span>实时回复</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- 搜索提示（标准i标签） -->
+    <section class="search-tip">
+        <i class="fab fa-weixin"></i>
+        <div class="text">
+            <span>微信搜一搜</span>
+            <span>关注获取更多严肃文学内容</span>
+        </div>
+        <button class="search-btn">严肃文学研究小组</button>
+    </section>
+
+    <!-- 文学入门指南 -->
+    <section class="beginner-guide">
+        <div class="guide-header">
+            <h3><i class="fas fa-seedling"></i> 文学入门指南</h3>
+            <p>为刚接触严肃文学的读者精心准备</p>
+        </div>
+        
+        <div class="guide-content">
+            <!-- 入门书单 -->
+            <div class="guide-section">
+                <h4>入门友好书单</h4>
+                <div class="book-list">
+                    <div class="book-item">
+                        <div class="book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="book-info">
+                            <h5>老人与海</h5>
+                            <p>海明威 · 中篇小说 · 语言简洁有力</p>
+                        </div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="book-info">
+                            <h5>城南旧事</h5>
+                            <p>林海音 · 短篇小说集 · 情感细腻</p>
+                        </div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="book-info">
+                            <h5>动物农场</h5>
+                            <p>乔治·奥威尔 · 政治寓言 · 篇幅短小</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 阅读建议 -->
+            <div class="guide-section">
+                <h4>阅读建议</h4>
+                                <div class="tips">
+                    <div class="tip-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h5>从短篇开始</h5>
+                            <p>先尝试中短篇小说，逐步适应严肃文学的语言风格</p>
+                        </div>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-highlighter"></i>
+                        <div>
+                            <h5>做简单笔记</h5>
+                            <p>记录触动你的句子和思考，不必追求深度分析</p>
+                        </div>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <h5>加入讨论</h5>
+                            <p>与其他读者交流感受，不同视角带来新理解</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 阅读计划 -->
+            <div class="guide-section">
+                <h4>渐进式阅读计划</h4>
+                <div class="reading-plan">
+                    <div class="plan-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h5>入门阶段 (1-2个月)</h5>
+                            <p>阅读3-5本中短篇小说，适应文学语言</p>
+                        </div>
+                    </div>
+                    <div class="plan-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h5>提升阶段 (2-3个月)</h5>
+                            <p>尝试经典长篇，配合阅读指南和解析</p>
+                        </div>
+                    </div>
+                    <div class="plan-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h5>拓展阶段 (持续)</h5>
+                            <p>探索不同流派和时期作品，形成个人阅读体系</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 行动引导 -->
+            <div class="action-section">
+                <a href="https://yswxstudy.my.canvasite.cn/1119/#%E5%8A%A0%E5%85%A5%E7%A4%BE%E7%BE%A4" target="_blank" class="action-btn">
+                    <i class="fas fa-comments"></i>
+                    加入新手读书群
+                </a>
+                <a href="https://yswxstudy.my.canvasite.cn/1119/#%E4%B9%A6%E7%B1%8D%E6%8E%A8%E8%8D%90" target="_blank" class="action-btn outline">
+                    <i class="fas fa-list"></i>
+                    查看完整书单
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 书籍卡片 -->
+    <section class="books">
+        <div class="book-card">
+            <h4>战争与和平</h4>
+            <p>现实主义英雄史诗，以1812年俄法战争为背景，展现俄国人民的抗争与社会矛盾，被誉为"世界伟大长篇小说"。</p>
+        </div>
+        <div class="book-card">
+            <h4>呼兰河传</h4>
+            <p>萧红童年回忆录，以东北小城呼兰为背景，刻画风土人情与封建陋习，文字质朴却饱含批判与怀念。</p>
+        </div>
+        <div class="book-card">
+            <h4>百年孤独</h4>
+            <p>魔幻现实主义经典，讲述布恩迪亚家族七代兴衰，映射拉美百年历史，1982年获诺贝尔文学奖。</p>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

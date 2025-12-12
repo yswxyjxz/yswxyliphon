@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>每周书评 - 严肃文学研究小组</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #F5F0E6;
+            color: #333;
+            line-height: 1.5;
+            padding-bottom: 20px;
+            min-height: 100vh;
+        }
+        
+        /* 返回按钮 */
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 15px 10px;
+            color: #8B5A2B;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
+        .back-btn i {
+            font-size: 18px;
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            padding: 10px 15px 20px;
+            border-bottom: 1px solid #E6D5B8;
+            margin: 0 15px 20px;
+            position: relative;
+        }
+        
+        .page-header h1 {
+            font-family: "STKaiti", cursive;
+            color: #8B5A2B;
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .page-header h1 i {
+            font-size: 26px;
+        }
+        
+        .page-header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* 最新书评标签 */
+        .latest-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B5A2B, #D2B48C);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+            box-shadow: 0 2px 5px rgba(139, 90, 43, 0.2);
+        }
+        
+        /* 书评列表容器 */
+        .review-list {
+            padding: 0 15px;
+        }
+        
+        /* 书评卡片 */
+        .review-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E6D5B8;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .review-item:hover,
+        .review-item:active {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(139, 90, 43, 0.15);
+            border-color: #8B5A2B;
+        }
+        
+        /* 书评头部 */
+        .review-header {
+            padding: 16px 16px 12px;
+            border-bottom: 1px solid #F5F0E6;
+            position: relative;
+        }
+        
+        .review-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #8B5A2B;
+            margin-bottom: 6px;
+            line-height: 1.4;
+            font-family: "STKaiti", cursive;
+        }
+        
+        .book-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #8B5A2B;
+        }
+        
+        .book-meta::before {
+            content: '📖';
+            font-size: 12px;
+        }
+        
+        /* 书评内容 */
+        .review-content {
+            padding: 16px;
+        }
+        
+        .review-excerpt {
+            font-size: 15px;
+            color: #444;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 4;
+            margin-bottom: 12px;
+        }
+        
+        /* 书评底部 */
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px dashed #E6D5B8;
+        }
+        
+        .review-date {
+            font-size: 12px;
+            color: #8B5A2B;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .review-date i {
+            font-size: 11px;
+        }
+        
+        .read-more {
+            font-size: 14px;
+            color: #8B5A2B;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .read-more i {
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .review-item:hover .read-more i,
+        .review-item:active .read-more i {
+            transform: translateX(3px);
+        }
+        
+        /* 页面底部 */
+        .page-footer {
+            text-align: center;
+            padding: 25px 15px 15px;
+            color: #666;
+            font-size: 13px;
+            margin-top: 10px;
+            border-top: 1px solid #E6D5B8;
+            margin: 20px 15px 0;
+        }
+        
+        .page-footer p {
+            margin-bottom: 8px;
+        }
+        
+        /* 空状态（如果需要） */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8B5A2B;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        /* 适配各种屏幕尺寸 */
+        @media (min-width: 375px) {
+            .review-title {
+                font-size: 19px;
+            }
+        }
+        
+        @media (min-width: 414px) {
+            .page-header h1 {
+                font-size: 26px;
+            }
+            
+            .review-title {
+                font-size: 20px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            body {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 10px;
+                background: #F5F0E6;
+            }
+            
+            .review-item {
+                border-radius: 15px;
+            }
+        }
+        
+        /* 加载动画 */
+        .loading {
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+        }
+        
+        .loading-dots {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .loading-dot {
+            width: 10px;
+            height: 10px;
+            background: #8B5A2B;
+            border-radius: 50%;
+            animation: loadingDot 1.4s infinite ease-in-out both;
+        }
+        
+        .loading-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+        
+        .loading-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+        
+        @keyframes loadingDot {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #F5F0E6;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #D2B48C;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 返回按钮 -->
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        <span>返回首页</span>
+    </a>
+    
+    <!-- 页面标题 -->
+    <div class="page-header">
+        <h1><i class="fas fa-feather-alt"></i> 每周书评</h1>
+        <p>严肃文学研究小组官方深度解读</p>
+        <div class="latest-badge">最新书评</div>
+    </div>
+    
+    <!-- 书评列表 -->
+    <div class="review-list">
+        <!-- 红楼梦 -->
+        <a href="https://mp.weixin.qq.com/s/cafL4-O1gGKrRT3koDEIJA" target="_blank" class="review-item">
+            <div class="review-header">
+                <div class="review-title">《红楼梦》：盛筵中的废墟，镜中的我们</div>
+                <div class="book-meta">曹雪芹 · 清代长篇小说 · 古典文学巅峰</div>
+            </div>
+            <div class="review-content">
+                <div class="review-excerpt">
+                    三百年过去了，世界从帝制走向了赛博，宇宙从牛顿的钟表变成了量子泡沫，可我们依然捧着那本泛黄的《红楼梦》，为一个虚构的大家族的衰败，一群非亲非故的古人的命运，或叹息，或落泪，或彻夜辩论……
+                </div>
+                <div class="review-footer">
+                    <div class="review-date"><i class="far fa-calendar"></i> 本周更新</div>
+                    <div class="read-more">阅读全文 <i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- 我与地坛 -->
+        <a href="https://mp.weixin.qq.com/s/Vl9mE_SlZNJP1p3DzqZ2xg" target="_blank" class="review-item">
+            <div class="review-header">
+                <div class="review-title">《我与地坛》：史铁生与地坛的生命沉思录</div>
+                <div class="book-meta">史铁生 · 当代散文 · 生命哲学</div>
+            </div>
+            <div class="review-content">
+                <div class="review-excerpt">
+                    地坛的琉璃门楣依旧，古柏依旧，祭坛的石座依旧，但那个摇着轮椅进入园子的年轻人，却在这里完成了一场灵魂的蜕变。《我与地坛》不只是一篇散文，它是史铁生用生命书写的哲学宣言，是一部关于苦难、死亡与救赎的心灵史诗……
+                </div>
+                <div class="review-footer">
+                    <div class="review-date"><i class="far fa-calendar"></i> 上周更新</div>
+                    <div class="read-more">阅读全文 <i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- 古船 -->
+        <a href="https://mp.weixin.qq.com/s/A6dr-Q94SM7C85wfbKMuiw" target="_blank" class="review-item">
+            <div class="review-header">
+                <div class="review-title">《古船》：承载苦难与救赎的民族史诗</div>
+                <div class="book-meta">张炜 · 长篇小说 · 乡村变革史</div>
+            </div>
+            <div class="review-content">
+                <div class="review-excerpt">
+                    如果你想要理解改革开放前后中国乡村的裂变与阵痛；如果你渴望在泥沙俱下的时代洪流中寻找人性的微光——那么，我向你力荐这部当代文学的里程碑：张炜的《古船》……
+                </div>
+                <div class="review-footer">
+                    <div class="review-date"><i class="far fa-calendar"></i> 2周前</div>
+                    <div class="read-more">阅读全文 <i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- 百年孤独 -->
+        <a href="https://mp.weixin.qq.com/s/bjnRWs9BjcM-0kyI5WE7uA" target="_blank" class="review-item">
+            <div class="review-header">
+                <div class="review-title">《百年孤独》：一场穿越时空的宿命轮回</div>
+                <div class="book-meta">加西亚·马尔克斯 · 魔幻现实主义 · 诺贝尔文学奖</div>
+            </div>
+            <div class="review-content">
+                <div class="review-excerpt">
+                    如果你曾对家族血脉中那些说不清道不明的传承感到好奇；如果你曾在某个瞬间感到时间并非线性流淌，而是一场周而复始的循环——那么，我向你郑重推荐这部拉美文学的皇冠：加西亚·马尔克斯的《百年孤独》……
+                </div>
+                <div class="review-footer">
+                    <div class="review-date"><i class="far fa-calendar"></i> 3周前</div>
+                    <div class="read-more">阅读全文 <i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- 呐喊 -->
+        <a href="https://mp.weixin.qq.com/s/9JY9629IGxqbvRcvOsU57A" target="_blank" class="review-item">
+            <div class="review-header">
+                <div class="review-title">《呐喊》：穿越百年的灵魂呐喊</div>
+                <div class="book-meta">鲁迅 · 短篇小说集 · 现代文学奠基</div>
+            </div>
+            <div class="review-content">
+                <div class="review-excerpt">
+                    如果你曾对现实的种种感到困惑、不满，甚至有一股无名火无处发泄；如果你曾觉得周遭的空气有些沉闷，渴望听到一点真实而尖锐的声音——那么，我向你郑重推荐这本薄薄却重若千钧的小书：鲁迅的《呐喊》……
+                </div>
+                <div class="review-footer">
+                    <div class="review-date"><i class="far fa-calendar"></i> 1月前</div>
+                    <div class="read-more">阅读全文 <i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- 活着 -->
+        <a href="https://mp.weixin.qq.com/s/N5P1Tk4wX2CiCsht2Jm6YA" target="_blank" class="review-item">
+            <div class="review-header">
+                <div class="review-title">《活着》：向死而生的生命史诗与沉默的苦难哲学</div>
+                <div class="book-meta">余华 · 长篇小说 · 生存哲学</div>
+            </div>
+            <div class="review-content">
+                <div class="review-excerpt">
+                    在中国当代文学的星空中，余华的《活着》无疑是一颗亮度极高、却冷峻刺眼的星。它用近乎残忍的平静，叙述了一个人如何在一生的时间里，失去一切，最终仅与一头老牛为伴。这不仅仅是一个关于苦难的故事，更是一部探讨生存本质、命运无常与生命韧性的哲学寓言……
+                </div>
+                <div class="review-footer">
+                    <div class="review-date"><i class="far fa-calendar"></i> 1月前</div>
+                    <div class="read-more">阅读全文 <i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <!-- 页面底部 -->
+    <div class="page-footer">
+        <p>每周更新一篇深度书评</p>
+        <p>关注微信公众号[严肃文学研究小组]获取最新内容</p>
+    </div>
+    
+    <script>
+        // 简单的点击效果增强
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为每个书评项添加触摸反馈
+            const reviewItems = document.querySelectorAll('.review-item');
+            
+            reviewItems.forEach(item => {
+                // 触摸开始效果
+                item.addEventListener('touchstart', function() {
+                    this.style.transform = 'translateY(-1px) scale(0.995)';
+                    this.style.boxShadow = '0 2px 8px rgba(139, 90, 43, 0.2)';
+                });
+                
+                // 触摸结束效果
+                item.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+                
+                // 触摸取消效果
+                item.addEventListener('touchcancel', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
+            
+            // 添加页面加载动画
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 50);
+            
+            // 防止iOS上的弹性滚动
+            document.addEventListener('touchmove', function(e) {
+                if(e.target.tagName === 'A') {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            // 优化滚动性能
+            let ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        // 这里可以添加视差滚动效果
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
